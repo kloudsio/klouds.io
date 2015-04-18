@@ -1,0 +1,20 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/metadevfoundation/microgrid",
+  "authors": [
+    "Daniel Sont <dan.sont@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qwest": "~1.5.11",
+    "lodash": "~3.7.0"
+  }
+}

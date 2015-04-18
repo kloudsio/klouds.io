@@ -1,0 +1,3 @@
+component: layout
+body:
+	component: dashboard
