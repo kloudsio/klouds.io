@@ -1,3 +1,4 @@
-component: layout
+title: MicroGrid
 body:
-	component: dashboard
+		component: dashboard
+		title: MicroGrid

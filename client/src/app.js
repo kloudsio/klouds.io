@@ -9,23 +9,17 @@ components['layout'] = require('./components/layout');
 
 
 function build(x) {
-	function render(y) {
-		return components[x.component](y);
-	};
 
-	var params = _.map(x, function (k, v) {
-		if (typeof v.component !== 'undefined') {
-			return build(v);
-		}
-		return v;
-	});
-
-	//Render Component
-	return render(params);
+  _.forEach(x, function (k, v) {
+    if (typeof v === 'object' && typeof v.component === 'string') {
+      v = components[v.component](v);
+    }
+  });
+  return components['layout'](x);
 }
 
 var html = build(structure);
 
 document.addEventListener("DOMContentLoaded", function () {
-	document.body.innerHTML = html;
+  document.body.innerHTML = html;
 });
