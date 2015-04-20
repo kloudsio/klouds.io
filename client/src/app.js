@@ -1,25 +1,31 @@
+var zepto = require('zepto');
 var _ = require('lodash');
+
 var conf = require('../config.js');
-var structure = require('./app.yaml');
 
-var components = {};
+Component = {};
+Component.dashboard = require('./components/dashboard');
+Component.layout = require('./components/layout');
+Component.stripe = require('./components/stripe');
+Component.grid = require('./components/grid');
 
-components['dashboard'] = require('./components/dashboard');
-components['layout'] = require('./components/layout');
+Component.dashboard.init();
+Component.layout.init();
+Component.stripe.init();
+Component.grid.init();
 
 
-function build(x) {
+var describe = require('./descriptive.yaml');
+var r = _(describe).mapValues(function (v, k) {
+  return function (options) {
+    return Component[k].render(_.defaults(options, v));
+  };
+}).value();
 
-  _.forEach(x, function (k, v) {
-    if (typeof v === 'object' && typeof v.component === 'string') {
-      v = components[v.component](v);
-    }
-  });
-  return components['layout'](x);
-}
+var html = r.layout({
+  body: r.dashboard({}) + r.grid({})
+})
 
-var html = build(structure);
-
-document.addEventListener("DOMContentLoaded", function () {
-  document.body.innerHTML = html;
+$(function () {
+  $('body').append(html);
 });

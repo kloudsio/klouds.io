@@ -1,5 +1,12 @@
-var dashboard = require('./dashboard.ejs');
+var template = require('./dashboard.ejs');
 
-module.exports = function (params) {
-  return dashboard(params);
+var component = {
+  init: function (params) {
+
+  },
+  render: function (params) {
+    return template(params);
+  }
 }
+
+module.exports = component;

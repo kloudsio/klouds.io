@@ -1,0 +1,20 @@
+layout:
+  title: MicroGrid
+  body:
+dashboard:
+  title: MicroGrid
+  body:
+grid:
+  apps:
+    - title: Ghost
+    - title: NodeBB
+    - title: Reaction
+    - title: Mumble
+intro: |
+  <h1>Titleness</h1>
+  <p>
+    We are taking todays open-source app hosting industry. Currently when a customer subscribes to an app they are billed as if they are paying for an entire fixed-size Virtual Machine. The hosting provider's profit margin comes from closed-source deployment optimizations, which reduce the costs of large-scale deployments.
+  </p>
+  <p>
+    This poses a problem. When monetized this way, These Opensource softwares are inferior by design, and at a business disadvantage. Collaboration, community, and governence are skewed by business incentives.
+  </p>

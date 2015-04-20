@@ -1,7 +1,13 @@
-var layout = require('./layout.css');
-var typography = require('./typography.css');
-var layout = require('./layout.ejs');
+var template = require('./layout.ejs');
 
-module.exports = function (params) {
-	return layout(params);
-};
+var component = {
+	init: function (params) {
+		require('./layout.css');
+		require('./typography.css');
+	},
+	render: function (params) {
+		return template(params);
+	}
+}
+
+module.exports = component;
