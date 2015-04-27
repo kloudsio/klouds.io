@@ -4,47 +4,54 @@ var co = require('co');
 var _ = require('lodash');
 var path = require('path');
 
-var configjs = require('./config');
-
 var app = koa();
 
-module.exports.start = function (modules) {
-  co(function* main() {
 
-    var apps = yield _.mapValues(modules, function (_module, _path) {
-      return _module.call(context);
-    });
-
-		_.forEach(apps, function(v, k) {
-			app.use(mount(k, v));
-		});
-
-    app.listen(config('port'));
-  }).catch(function onError(err) {
-	  console.error(err.stack)
+function logFactory(prefix) {
+	return _.mapValues({
+		warn: '\x1b[35m',
+		error: '\x1b[31m',
+		log: '\x1b[2m',
+		info: '\x1b[36m'
+	}, function (color, method) {
+		return console[method].bind(
+			console,
+			'\x1b[36m' + color + _.padLeft(method.toUpperCase(), 5) + '\x1b[0m',
+			'\x1b[33m' + _.padRight(prefix.toUpperCase(), 8) + '\x1b[0m'
+		);
 	});
 }
 
-function config(cfg) {
-	// ENV
-  ekey = cfg.toUpperCase();
-  if (typeof process.env[ekey] !== 'undefined') {
-    console.info(`Using ENV.${ekey}: ${process.env[ekey]}`);
-    return process.env[ekey];
-  }
+var logs = logFactory('Main');
 
-	// CONFIG File
-  cfg = cfg.toLowerCase();
-  if (typeof configjs[cfg] !== 'undefined') {
-    console.info(`Using CFG.${cfg}: ${configjs[cfg]}`);
-    return configjs[cfg];
-  }
 
-  throw `Env var or Configuration for missing variable ${cfg}`;
+function* load(config, _modulepath, _mountpoint) {
+	logs.log(`Loading Module '${_mountpoint}'`);
+	try {
+		var context = _.assign({
+			config: config
+		}, logFactory(_modulepath));
+		var _module = require(path.join('..', _modulepath));
+		var res = yield _module.call(context)
+		app.use(mount(_mountpoint, res));
+		logs.log(`Loaded Module '${_mountpoint}'`);
+	} catch (e) {
+		logs.error(
+			`Error Loading Module { '${_mountpoint}': './${_modulepath}' }\n${e.stack}`
+		);
+	}
 }
 
-config = _.memoize(config);
+module.exports.start = function (config, modules) {
+	config = config;
 
-var context = {
-	config: config
-};
+	co(function* main() {
+		var apps = yield _.mapValues(modules, function (_modulepath, _mountpoint) {
+			return load(config, _modulepath, _mountpoint);
+		});
+
+		app.listen(config('port'));
+	}).catch(function onError(err) {
+		logs.error(err.stack)
+	});
+}

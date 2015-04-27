@@ -110,7 +110,7 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var template = __webpack_require__(13);
+	var template = __webpack_require__(11);
 
 	var component = {
 	  init: function (params) {
@@ -128,7 +128,7 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var template = __webpack_require__(11);
+	var template = __webpack_require__(13);
 
 	var component = {
 		init: function (params) {
@@ -13983,7 +13983,7 @@
 	    };
 	    var __stack = {
 	        lineno: 1,
-	        input: '<div class="page">\n  <%- title %>\n  <%- body %>\n</div>\n',
+	        input: '<div class="dashboard row">\n	<div class="box">\n		<%- body %>		\n	</div>\n</div>\n',
 	        filename: "."
 	    };
 	    function rethrow(err, str, filename, lineno) {
@@ -14000,7 +14000,7 @@
 	        var buf = [];
 	        with (locals || {}) {
 	            (function() {
-	                buf.push('<div class="page">\n  ', (__stack.lineno = 2, title), "\n  ", (__stack.lineno = 3, body), "\n</div>\n");
+	                buf.push('<div class="dashboard row">\n	<div class="box">\n		', (__stack.lineno = 3, body), "		\n	</div>\n</div>\n");
 	            })();
 	        }
 	        return buf.join("");
@@ -14061,7 +14061,7 @@
 	    };
 	    var __stack = {
 	        lineno: 1,
-	        input: '<div class="dashboard row">\n	<div class="box">\n		<%- body %>		\n	</div>\n</div>\n',
+	        input: '<div class="page">\n  <%- title %>\n  <%- body %>\n</div>\n',
 	        filename: "."
 	    };
 	    function rethrow(err, str, filename, lineno) {
@@ -14078,7 +14078,7 @@
 	        var buf = [];
 	        with (locals || {}) {
 	            (function() {
-	                buf.push('<div class="dashboard row">\n	<div class="box">\n		', (__stack.lineno = 3, body), "		\n	</div>\n</div>\n");
+	                buf.push('<div class="page">\n  ', (__stack.lineno = 2, title), "\n  ", (__stack.lineno = 3, body), "\n</div>\n");
 	            })();
 	        }
 	        return buf.join("");

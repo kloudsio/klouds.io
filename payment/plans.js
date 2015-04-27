@@ -22,7 +22,6 @@ var plans = [{
 var sync = function* () {
 
   var ids = _.pluck(plans, 'id');
-  console.log('syncing stripe...');
 
   // Create Missing Plans
   var created = _.compact(yield _.map(ids, function (v, k) {
@@ -32,13 +31,6 @@ var sync = function* () {
       return costripe.plans.create(plans[k]);
     });
   }));
-
-  // Console Log
-  _.map(created, function (v, k) {
-    console.log('Plan Created: \'%s\'', ids[k]);
-  });
-
-  console.log('stripe sync complete.');
 
   return created;
 }

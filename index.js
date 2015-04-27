@@ -1,12 +1,15 @@
 var unheart_nodejs = `One must run me with io.js! ${'<3'}`;
 
+var config = require('./config');
 var main = require('./main');
-var co = require('co');
+
+// run configuration
 
 // include modules
-var modules = {};
+var modules = {
+	'/': 'front-end',
+	'/user': 'user',
+	'/payment': 'payment',
+};
 
-// modules['/'] = require('./client');
-modules['/payment'] = require('./payment');
-
-main.start(modules);
+main.start(config, modules);
