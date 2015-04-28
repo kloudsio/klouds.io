@@ -1,30 +1,26 @@
-var koa = require('koa');
-var kroute = require('kroute');
-var kjson = require('koa-json');
-var mount = require('koa-mount')
-var Grant = require('grant-koa')
-var kjsonb = require('koa-json-body');
+var _ = require('lodash');
+var router = require('koa-joi-router')
 
+
+var Grant = require('grant-koa')
+var mount = require('koa-mount')
+
+var users = require('./users');
 var routes = require('./routes');
 
+module.exports = function* (app) {
 
-module.exports = function* () {
-  // KOA
-  var app = koa();
-  var krouter = kroute();
-  app.use(kjson());
-	app.use(kjsonb());
-  app.use(krouter);
-	app.use(function *() {
-		this.body = this.request.body;
-	});
 
-	var grant = new Grant(this.config('grant'))
-	app.use(mount(grant))
+	app.use(users);
 
-  // Routes
-	krouter.post('/login', routes.login);
-  krouter.post('/create', routes.create);
+  var jrouter = router()
 
-  return app;
+  jrouter.get('/login', routes.login);
+  jrouter.post('/create', routes.create.config, routes.create.handler);
+	app.use(jrouter.middleware());
+
+	var grant = new Grant(this.config('grant'));
+	app.use(mount(grant));
+
+	return app;
 }

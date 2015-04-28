@@ -1,15 +1,13 @@
-var koa = require('koa');
-var kroute = require('kroute');
+var router = require('koa-joi-router');
+var routes = require('./routes');
 
 
+module.exports = function* (app) {
 
-var godmode = module.exports = function* () {
-		var app = koa();
+  var devui = router();
+  app.use(devui.middleware());
 
-		var router = kroute();
-		koa.use(router());
+  devui.get('/api', routes.api);
 
-		router.get('api', routes.api);
-
-		return app;
+  return app;
 }
