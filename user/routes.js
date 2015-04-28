@@ -1,57 +1,77 @@
 var jwt = require('koa-jwt');
+var pswd = require('pswd')();
 var Joi = require('joi');
 
-module.exports.login = function* () {
-	var res = yield this.users.findOne({
-		email: this.body.email,
-		password: this.body.password
-	});
+module.exports.login = {
+  method: 'post',
+  path: '/login',
+  validate: {
+    body: {
+      email: Joi.string().lowercase().email(),
+      password: Joi.string().max(100)
+    },
+    type: 'json'
+  },
+  handler: function* () {
+    var params = this.request.body;
+    var user = yield this.users.findOne({
+      email: params.email
+    });
 
-	if (!res) {
-		this.status = 401;
-		this.body = 'Wrong user or password';
-		return;
-	}
+    if (user) {
+      var match = yield pswd.compare(params.password, user.password);
+      if (match) {
+        var token = jwt.sign(user, this.config('jwt').secret, {
+          expiresInMinutes: 60 * 5
+        });
+				delete user.password;
+        this.body = {
+          token: token,
+          user: user
+        };
+				return;
+      }
+    }
 
-	var token = jwt.sign(res, this.config('jwt').secret, {
-		expiresInMinutes: 60 * 5
-	});
-	this.body = {
-		token: token
-	};
+    this.status = 401;
+    this.body = {
+      error: 'Wrong user or password'
+    };
+    return;
+  }
 };
 
 module.exports.create = {
-	config: {
-		validate: {
-			body: {
-				email: Joi.string().lowercase().email(),
-				password: Joi.string().max(100)
-			},
-			output: {
-				id: Joi.string(),
-			},
-			type: 'json'
-		},
-	},
-	handler: function* () {
-  	var params = this.request.body;
+  method: 'post',
+  path: '/create',
+  validate: {
+    body: {
+      email: Joi.string().lowercase().email(),
+      password: Joi.string().max(100)
+    },
+    type: 'json'
+  },
+  handler: function* () {
+    var params = this.request.body;
 
-  	var res = yield this.users.find({
-  		email: params.email
-  	});
-  	if (res) {
-  		this.status = 400;
-  		this.body = 'That user already exists';
-  		this.log('User already exists', res);
-  		return;
-  	}
-  	res = yield this.users.insert({
-  		email: params.email,
-  		password: params.password
-  	});
-  	this.info(res);
-  	this.body = res;
+    var exists = yield this.users.findOne({
+      email: params.email
+    });
+    if (exists) {
+      this.status = 401;
+      this.body = {
+        error: 'That user already exists'
+      }
+      this.log('User already exists', exists);
+      return;
+    }
+    var hash = yield pswd.hash(params.password);
+    var user = yield this.users.insert({
+      email: params.email,
+      password: hash
+    });
+    delete user.password;
+    this.body = user;
   }
 }
 

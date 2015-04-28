@@ -8,9 +8,9 @@ var main = require('./lib/main');
 // include modules
 var modules = {
 	'/user': 'user',
-	'/payment': 'payment',
-	'/godmode': 'dev-interface',
-	'/': 'front-end',
+	// '/payment': 'payment',
+	// '/godmode': 'dev-interface',
+	// '/': 'front-end',
 };
 
 main.start(config, modules);

@@ -21,6 +21,7 @@
     "koa-static": "^1.4.9",
     "lodash": "^3.7.0",
     "monk": "^1.0.1",
+    "pswd": "^3.0.1",
     "stripe": "^3.3.4",
     "thenify-all": "^1.6.0"
   }
