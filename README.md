@@ -6,7 +6,7 @@
 
 The design is extremely modular, built upon Koa.
 
-Modules are mounted on configurable endpoints: e.x. http://localhost:8080/**modules/ftw**
+Modules are mounted on configurable endpoints: http://localhost:8080/**modules/ftw**
 
 
 ```bash
