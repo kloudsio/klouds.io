@@ -1,5 +1,5 @@
 class Layer {
-  constructor(selection) {
+  constructor({ selection }) {
     this.select = selection;
   }
 }

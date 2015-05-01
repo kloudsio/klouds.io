@@ -1,5 +1,5 @@
 var co = require('co');
-var template = require('./templates/login.ejs');
+var template = require('../templates/login.ejs');
 var api = require('../lib/api.js');
 var Layer = require('../lib/layer.js');
 

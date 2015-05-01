@@ -1,7 +1,3 @@
-require("babel/register")({
-  extensions: [".es6", ".es", ".jsx", ".js"]
-});
-
 var _ = require('lodash');
 var d3 = require('d3');
 

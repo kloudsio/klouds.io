@@ -1,4 +1,4 @@
-var item = require('./templates/apps.ejs');
+var apps = require('../templates/apps.ejs');
 
 var component = {
 	init: function () {
@@ -6,7 +6,7 @@ var component = {
 	},
 	render: function (params) {
 
-		return item(params);
+		return apps(params);
 	}
 }
 

@@ -9,6 +9,6 @@ module.exports = function* (mw) {
 	// console.log(client);
   app.use(mw);
 	// app.use(client);
-	app.use(kstatic(path.join(__dirname, 'client/static')));
+	app.use(kstatic(path.join(__dirname, 'client/build')));
 	return app;
 }
