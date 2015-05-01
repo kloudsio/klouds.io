@@ -7,9 +7,7 @@
 The design is extremely modular, built upon Koa.
 
 Modules are mounted on configurable endpoints: e.x. http://localhost:8080/**modules/ftw**
-Directory structure
-/lib/
-/modules/
+
 
 ```bash
 ├── index.js      # Entry point
