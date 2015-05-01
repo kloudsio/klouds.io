@@ -1,4 +1,4 @@
-var item = require('./item.ejs');
+var item = require('./templates/apps.ejs');
 
 var component = {
 	init: function () {

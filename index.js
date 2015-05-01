@@ -10,7 +10,7 @@ var modules = {
 	'/user': 'user',
 	// '/payment': 'payment',
 	// '/godmode': 'dev-interface',
-	// '/': 'front-end',
+	'/': 'front-end',
 };
 
 main.start(config, modules);

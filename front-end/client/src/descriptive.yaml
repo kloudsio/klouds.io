@@ -1,10 +1,7 @@
 layout:
   title: MicroGrid
   body:
-dashboard:
-  title: MicroGrid
-  body:
-grid:
+apps:
   apps:
     - title: Ghost
     - title: NodeBB

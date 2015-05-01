@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var costripe = require('./co-stripe');
 
-
 var plans = [{
   amount: 999,
   interval: "month",
@@ -16,7 +15,6 @@ var plans = [{
   currency: "usd",
   id: "yearly"
 }, ];
-
 
 
 var sync = function* () {
