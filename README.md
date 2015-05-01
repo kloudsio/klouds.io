@@ -4,7 +4,12 @@
 
 ## Back End Controller
 
-The design is completely modular, based on Koajs. Each module has a /<module-name>/index.js. Configurable URL .. localhost:8080/<module/mount/path/>
+The design is extremely modular, built upon Koa.
+
+Modules are mounted on configurable endpoints: e.x. http://localhost:8080/**modules/ftw**
+Directory structure
+/lib/
+/modules/
 
 ```bash
 ├── index.js      # Entry point
