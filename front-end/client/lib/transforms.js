@@ -1,9 +1,5 @@
 var state = require('./state');
 
-var	transforms = {
-	login: setUser
-};
-
 function setUser({user, token}) {
   state.set(function () {
     this.user = user;
@@ -13,5 +9,9 @@ function setUser({user, token}) {
 	  };
   });
 }
+
+var	transforms = {
+	login: setUser
+};
 
 module.exports = transforms;

@@ -1,6 +1,7 @@
-var transforms = require('./transforms.js');
-var state = require('./state.js');
-var qwest = require('qwest');
+var qwest = require('pyrsmk/qwest:qwest.min.js');
+
+var transforms = require('/lib/transforms.js');
+var state = require('/lib/state.js');
 
 var apiSpec = {
 	user: {

@@ -24,7 +24,7 @@ coverage
 build/Release
 
 node_modules
-
+duo_modules
 bower_modules
 
 # Users Environment Variables

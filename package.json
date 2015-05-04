@@ -24,5 +24,6 @@
     "pswd": "^3.0.1",
     "stripe": "^3.3.4",
     "thenify-all": "^1.6.0"
-  }
+  },
+  "devDependencies": {}
 }

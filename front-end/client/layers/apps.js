@@ -1,4 +1,4 @@
-var apps = require('../templates/apps.ejs');
+var apps = require('/templates/apps.hbs');
 
 var component = {
 	init: function () {

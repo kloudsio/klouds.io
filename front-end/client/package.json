@@ -4,14 +4,12 @@
   "description": "Client of MetaDev",
   "author": "",
   "license": "ISC",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "babel": "^5.2.6",
     "co": "^4.5.2",
     "duo": "^0.11.3",
-    "lodash": "^3.7.0",
-    "babel-core": "^5.2.2",
-    "babel-loader": "^5.0.0",
-    "duo-babel": "^5.2.0"
+    "duo-babel": "^5.2.0",
+    "duo-handlebars": "^0.1.0"
   }
 }

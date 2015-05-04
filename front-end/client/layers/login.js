@@ -1,7 +1,8 @@
-var co = require('co');
-var template = require('../templates/login.ejs');
-var api = require('../lib/api.js');
-var Layer = require('../lib/layer.js');
+var template = require('/templates/login.hbs');
+
+var co = require('tj/co');
+var api = require('/lib/api');
+var Layer = require('/lib/layer');
 
 
 class Login extends Layer {
@@ -15,20 +16,21 @@ class Login extends Layer {
 
 	mount() {
 		this.select.html(this.render());
-		this.select.select('button').on('click', this.login.bind(this));
+		this.select.select('button').on('click', this.onLogin.bind(this));
 	}
 
 	unmount() {
 		this.select.select('button').on('click', null);
 	}
 
-	login(data) {
+	onLogin(data) {
 		var data = {
 			email: this.select.select('input[type=email]').property('value'),
 			password: this.select.select('input[type=password]').property('value')
 		}
 		co(function*() {
 			var res = yield api.user.login(data);
+			console.log(`User Login: ${JSON.stringify(res, false, 2)}`);
 		});
 	}
 }
