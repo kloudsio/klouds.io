@@ -1,6 +1,6 @@
 var co = require('co'),
   _ = require('lodash'),
-  fs = require('fs')
+  fs = require('fs'),
 handlebars = require('duo-handlebars'),
   babel = require('duo-babel'),
   Duo = require('duo')
