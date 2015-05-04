@@ -1,13 +1,13 @@
 var apps = require('/templates/apps.hbs');
 
 var component = {
-	init: function () {
+  init: function () {
 
-	},
-	render: function (params) {
+  },
+  render: function (params) {
 
-		return apps(params);
-	}
+    return apps(params);
+  }
 }
 
 module.exports = component;

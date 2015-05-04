@@ -5,20 +5,22 @@ require('../styles/layout.css');
 require('../styles/typography.css');
 
 class Layout extends Layer {
-  constructor(selection) {
-    super(selection);
-  }
+	constructor(selection) {
+		super(selection);
+	}
 
-  render() {
-    return template({ title: '', body: ''});
-  }
+	render() {
+		return template({
+			title: '',
+			body: ''
+		});
+	}
 
-  mount() {
-    this.select.html(this.render());
-  }
+	mount() {
+		this.select.html(this.render());
+	}
 
-  unmount() {
-  }
+	unmount() {}
 }
 
 module.exports = Layout;
