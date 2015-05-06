@@ -2,14 +2,13 @@ var _ = require('lodash');
 var jrouter = require('koa-joi-router')
 
 
-var db = require('./user-db');
+var userStore = require('./user-db');
 var routes = require('./routes');
 
 
 
 module.exports = function* () {
-	this.use(db);
-
+	this.use(userStore);
 
 	var router = jrouter();
 	router.route(routes.create);
