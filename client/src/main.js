@@ -1,12 +1,12 @@
 var _ = require('lodash/lodash')
 var d3 = require('mbostock/d3');
 
-var Login = require('./layers/login');
-var Layout = require('./layers/layout');
-var Apps = require('./layers/apps');
+var Login = require('/components/login');
+var Layout = require('/components/layout');
+var Apps = require('/components/apps');
 
 
-var config = require('./config.yaml');
+// var config = require('/../config/config.yaml');
 
 
 document.addEventListener('DOMContentLoaded', function () {

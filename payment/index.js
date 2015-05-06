@@ -5,8 +5,8 @@ var costripe = require('./co-stripe');
 var plans = require('./plans');
 var routes = require('./routes');
 
+module.exports = function* () {
 
-module.exports = function* (app) {
   costripe(this.config('stripe_sk'));
 
   if (this.config('stripe_sync')) {
@@ -17,10 +17,8 @@ module.exports = function* (app) {
 
   // KOA
   var payments = router();
-  app.use(payments.middleware());
+  this.use(payments.middleware());
 
   // Routes
   payments.post('/subscribe', routes.createSubscription);
-
-  return app;
 }

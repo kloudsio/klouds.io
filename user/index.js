@@ -1,27 +1,18 @@
 var _ = require('lodash');
-var router = require('koa-joi-router')
-var koa = require('koa');
+var jrouter = require('koa-joi-router')
 
 
-var Grant = require('grant-koa')
-var mount = require('koa-mount')
-
-var users = require('./users');
+var db = require('./user-db');
 var routes = require('./routes');
 
-module.exports = function* (middleware) {
-  var app = koa();
-  app.use(middleware);
-	app.use(users);
-	var api = router();
-  api.route(routes.create);
-	api.route(routes.login);
-	app.use(api.middleware());
 
-	// var grant = new Grant(this.config('grant'));
-	// app.use(mount(grant));
 
-  this.log('hrrm');
-  this.log(app);
-	return app;
+module.exports = function* () {
+	this.use(db);
+
+
+	var router = jrouter();
+	router.route(routes.create);
+	router.route(routes.login);
+	this.use(router.middleware());
 }

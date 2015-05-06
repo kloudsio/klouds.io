@@ -91,21 +91,21 @@
 var _ = require('lodash/lodash');
 var d3 = require('mbostock/d3');
 
-var Login = require('./layers/login');
-var Layout = require('./layers/layout');
-var Apps = require('./layers/apps');
+var Login = require('/components/login');
+var Layout = require('/components/layout');
+var Apps = require('/components/apps');
 
-var config = require('./config.yaml');
+var config = require('/config.yaml');
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  var layout = new Layout('div#app');
-  layout.mount();
+	var layout = new Layout('div#app');
+	layout.mount();
 
-  var login = new Login('div.page');
-  login.mount();
+	var login = new Login('div.page');
+	login.mount();
 });
-}, {"lodash/lodash":2,"mbostock/d3":3,"./layers/login":4,"./layers/layout":5,"./layers/apps":6,"./config.yaml":7}],
+}, {"lodash/lodash":2,"mbostock/d3":3,"/components/login":4,"/components/layout":5,"/components/apps":6,"/config.yaml":7}],
 2: [function(require, module, exports) {
 /**
  * @license
@@ -21834,40 +21834,51 @@ var template = require('/templates/login.hbs');
 
 var co = require('tj/co');
 var api = require('/lib/api');
-var Layer = require('/lib/layer');
+var Component = require('/lib/component');
 
-var Login = (function (_Layer) {
+var Login = (function (_Component) {
 	function Login(selection) {
 		_classCallCheck(this, Login);
 
 		_get(Object.getPrototypeOf(Login.prototype), 'constructor', this).call(this, selection);
 	}
 
-	_inherits(Login, _Layer);
+	_inherits(Login, _Component);
 
 	_createClass(Login, [{
 		key: 'render',
-		value: function render() {
-			return template();
+		value: function render(data) {
+			// data = data || {};
+			// data.component = this;
+			return template(data);
 		}
 	}, {
 		key: 'mount',
 		value: function mount() {
 			this.select.html(this.render());
-			this.select.select('button').on('click', this.onLogin.bind(this));
+
+			this.password = this.select.select('input[type=password]');
+			this.email = this.select.select('input[type=email]');
+			this.login = this.select.select('button[name="login"]');
+			this.register = this.select.select('button[name="register"]');
+
+			this.login.on('click', this.onLogin.bind(this));
+			this.register.on('click', this.onRegister.bind(this));
 		}
 	}, {
 		key: 'unmount',
 		value: function unmount() {
-			this.select.select('button').on('click', null);
+			this.login.on('click', null);
+			this.register.on('click', null);
 		}
 	}, {
 		key: 'onLogin',
 		value: function onLogin(data) {
 			var data = {
-				email: this.select.select('input[type=email]').property('value'),
-				password: this.select.select('input[type=password]').property('value')
+				email: this.email.property('value'),
+				password: this.password.property('value')
 			};
+
 			co(regeneratorRuntime.mark(function callee$2$0() {
 				var res;
 				return regeneratorRuntime.wrap(function callee$2$0$(context$3$0) {
@@ -21888,17 +21899,46 @@ var Login = (function (_Layer) {
 				}, callee$2$0, this);
 			}));
 		}
+	}, {
+		key: 'onRegister',
+		value: function onRegister(data) {
+
+			var data = {
+				email: this.email.property('value'),
+				password: this.password.property('value')
+			};
+
+			co(regeneratorRuntime.mark(function callee$2$0() {
+				var res;
+				return regeneratorRuntime.wrap(function callee$2$0$(context$3$0) {
+					while (1) switch (context$3$0.prev = context$3$0.next) {
+						case 0:
+							context$3$0.next = 2;
+							return api.user.register(data);
+
+						case 2:
+							res = context$3$0.sent;
+
+							console.log('User Login: ' + JSON.stringify(res, false, 2));
+
+						case 4:
+						case 'end':
+							return context$3$0.stop();
+					}
+				}, callee$2$0, this);
+			}));
+		}
 	}]);
 
 	return Login;
-})(Layer);
+})(Component);
 
 module.exports = Login;
-}, {"/templates/login.hbs":8,"tj/co":9,"/lib/api":10,"/lib/layer":11}],
+}, {"/templates/login.hbs":8,"tj/co":9,"/lib/api":10,"/lib/component":11}],
 8: [function(require, module, exports) {
 var Handlebars = require("handlebars-runtime");
 module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div class=\"dashboard row\">\n	<div class=\"box\">\n		<form id=\"login\">\n			<input placeholder=\"email\" name=\"email\" type=\"email\" />\n			<input placeholder=\"password\" name=\"password\" type=\"password\" />\n			<button type=\"button\" name=\"button\">Login</button>\n		</form>\n	</div>\n	<div class=\"box\" style=\"display: none\">\n	</div>\n</div>\n";
+    return "<div class=\"dashboard row\">\n	<div class=\"box\">\n		<form id=\"login\">\n			<input placeholder=\"email\" name=\"email\" type=\"email\" />\n			<input placeholder=\"password\" name=\"password\" type=\"password\" />\n			<button type=\"button\" name=\"login\">Login</button>\n			<button type=\"button\" name=\"register\">Register</button>\n		</form>\n	</div>\n	<div class=\"box\" style=\"display: none\">\n	</div>\n</div>\n";
 },"useData":true});
 }, {"handlebars-runtime":12}],
 12: [function(require, module, exports) {
@@ -22790,8 +22830,6 @@ return /******/ (function(modules) { // webpackBootstrap
  * slice() reference.
  */
 
-'use strict';
-
 var slice = Array.prototype.slice;
 
 /**
@@ -22835,7 +22873,7 @@ function co(gen) {
   // we wrap everything in a promise to avoid promise chaining,
   // which leads to memory leak errors.
   // see https://github.com/tj/co/issues/180
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     if (typeof gen === 'function') gen = gen.call(ctx);
     if (!gen || typeof gen.next !== 'function') return resolve(gen);
 
@@ -22866,7 +22904,7 @@ function co(gen) {
     function onRejected(err) {
       var ret;
       try {
-        ret = gen['throw'](err);
+        ret = gen.throw(err);
       } catch (e) {
         return reject(e);
       }
@@ -22883,12 +22921,11 @@ function co(gen) {
      */
 
     function next(ret) {
-      if (ret.done) {
-        return resolve(ret.value);
-      }var value = toPromise.call(ctx, ret.value);
-      if (value && isPromise(value)) {
-        return value.then(onFulfilled, onRejected);
-      }return onRejected(new TypeError('You may only yield a function, promise, generator, array, or object, ' + 'but the following object was passed: "' + String(ret.value) + '"'));
+      if (ret.done) return resolve(ret.value);
+      var value = toPromise.call(ctx, ret.value);
+      if (value && isPromise(value)) return value.then(onFulfilled, onRejected);
+      return onRejected(new TypeError('You may only yield a function, promise, generator, array, or object, '
+        + 'but the following object was passed: "' + String(ret.value) + '"'));
     }
   });
 }
@@ -22902,19 +22939,13 @@ function co(gen) {
  */
 
 function toPromise(obj) {
-  if (!obj) {
-    return obj;
-  }if (isPromise(obj)) {
-    return obj;
-  }if (isGeneratorFunction(obj) || isGenerator(obj)) {
-    return co.call(this, obj);
-  }if ('function' == typeof obj) {
-    return thunkToPromise.call(this, obj);
-  }if (Array.isArray(obj)) {
-    return arrayToPromise.call(this, obj);
-  }if (isObject(obj)) {
-    return objectToPromise.call(this, obj);
-  }return obj;
+  if (!obj) return obj;
+  if (isPromise(obj)) return obj;
+  if (isGeneratorFunction(obj) || isGenerator(obj)) return co.call(this, obj);
+  if ('function' == typeof obj) return thunkToPromise.call(this, obj);
+  if (Array.isArray(obj)) return arrayToPromise.call(this, obj);
+  if (isObject(obj)) return objectToPromise.call(this, obj);
+  return obj;
 }
 
 /**
@@ -22958,14 +22989,15 @@ function arrayToPromise(obj) {
  * @api private
  */
 
-function objectToPromise(obj) {
+function objectToPromise(obj){
   var results = new obj.constructor();
   var keys = Object.keys(obj);
   var promises = [];
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     var promise = toPromise.call(this, obj[key]);
-    if (promise && isPromise(promise)) defer(promise, key);else results[key] = obj[key];
+    if (promise && isPromise(promise)) defer(promise, key);
+    else results[key] = obj[key];
   }
   return Promise.all(promises).then(function () {
     return results;
@@ -23001,7 +23033,7 @@ function isPromise(obj) {
  */
 
 function isGenerator(obj) {
-  return 'function' == typeof obj.next && 'function' == typeof obj['throw'];
+  return 'function' == typeof obj.next && 'function' == typeof obj.throw;
 }
 
 /**
@@ -23013,11 +23045,9 @@ function isGenerator(obj) {
  */
 function isGeneratorFunction(obj) {
   var constructor = obj.constructor;
-  if (!constructor) {
-    return false;
-  }if ('GeneratorFunction' === constructor.name || 'GeneratorFunction' === constructor.displayName) {
-    return true;
-  }return isGenerator(constructor.prototype);
+  if (!constructor) return false;
+  if ('GeneratorFunction' === constructor.name || 'GeneratorFunction' === constructor.displayName) return true;
+  return isGenerator(constructor.prototype);
 }
 
 /**
@@ -23031,11 +23061,12 @@ function isGeneratorFunction(obj) {
 function isObject(val) {
   return Object == val.constructor;
 }
+
 }, {}],
 10: [function(require, module, exports) {
 'use strict';
 
-var marked0$0 = [login].map(regeneratorRuntime.mark);
+var marked0$0 = [login, register].map(regeneratorRuntime.mark);
 var qwest = require('pyrsmk/qwest:qwest.min.js');
 
 var transforms = require('/lib/transforms.js');
@@ -23043,7 +23074,7 @@ var state = require('/lib/state.js');
 
 var apiSpec = {
 	user: {
-		register: null,
+		register: register,
 		login: login },
 
 	subscription: {
@@ -23070,6 +23101,38 @@ function login(data) {
 				return context$1$0.stop();
 		}
 	}, marked0$0[0], this);
+}
+
+function register(data) {
+	var res;
+	return regeneratorRuntime.wrap(function register$(context$1$0) {
+		while (1) switch (context$1$0.prev = context$1$0.next) {
+			case 0:
+				context$1$0.next = 2;
+				return qwest.post('/user/create', data, state.qwest);
+
+			case 2:
+				res = context$1$0.sent;
+
+				if (res) {
+					context$1$0.next = 5;
+					break;
+				}
+
+				return context$1$0.abrupt('return', false);
+
+			case 5:
+				context$1$0.next = 7;
+				return login(data);
+
+			case 7:
+				return context$1$0.abrupt('return', context$1$0.sent);
+
+			case 8:
+			case 'end':
+				return context$1$0.stop();
+		}
+	}, marked0$0[1], this);
 }
 
 module.exports = apiSpec;
@@ -23112,21 +23175,21 @@ var _ = require('lodash/lodash');
  * arg function|object arg.call(state) or _.assign(state, arg)
  */
 function set(arg) {
-  var old = state;
-  if (_.isFunction(arg)) arg.call(state);else _.assign(state, arg);
+	var old = state;
+	if (_.isFunction(arg)) arg.call(state);else _.assign(state, arg);
 }
 
 function on(key, cb) {
-  cb();
+	cb();
 }
 
 var state = {
-  set: set,
-  on: on,
-  user: null,
-  token: null,
-  qwest: {
-    dataType: 'json' } };
+	set: set,
+	on: on,
+	user: null,
+	token: null,
+	qwest: {
+		dataType: 'json' } };
 
 module.exports = state;
 }, {"lodash/lodash":2}],
@@ -23135,13 +23198,13 @@ module.exports = state;
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-var Layer = function Layer(selection) {
-  _classCallCheck(this, Layer);
+var Component = function Component(selection) {
+  _classCallCheck(this, Component);
 
   this.select = d3.select(selection);
 };
 
-module.exports = Layer;
+module.exports = Component;
 }, {}],
 5: [function(require, module, exports) {
 'use strict';
@@ -23157,40 +23220,40 @@ var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_ag
 var _inherits = function (subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 var template = require('/templates/layout.hbs');
-var Layer = require('../lib/layer.js');
+var Component = require('/lib/component');
 
-require('../styles/layout.css');
-require('../styles/typography.css');
+var Layout = (function (_Component) {
+	function Layout(selection) {
+		_classCallCheck(this, Layout);
 
-var Layout = (function (_Layer) {
-  function Layout(selection) {
-    _classCallCheck(this, Layout);
+		_get(Object.getPrototypeOf(Layout.prototype), 'constructor', this).call(this, selection);
+	}
 
-    _get(Object.getPrototypeOf(Layout.prototype), 'constructor', this).call(this, selection);
-  }
+	_inherits(Layout, _Component);
 
-  _inherits(Layout, _Layer);
+	_createClass(Layout, [{
+		key: 'render',
+		value: function render() {
+			return template({
+				title: '',
+				body: ''
+			});
+		}
+	}, {
+		key: 'mount',
+		value: function mount() {
+			this.select.html(this.render());
+		}
+	}, {
+		key: 'unmount',
+		value: function unmount() {}
+	}]);
 
-  _createClass(Layout, [{
-    key: 'render',
-    value: function render() {
-      return template({ title: '', body: '' });
-    }
-  }, {
-    key: 'mount',
-    value: function mount() {
-      this.select.html(this.render());
-    }
-  }, {
-    key: 'unmount',
-    value: function unmount() {}
-  }]);
-
-  return Layout;
-})(Layer);
+	return Layout;
+})(Component);
 
 module.exports = Layout;
-}, {"/templates/layout.hbs":16,"../lib/layer.js":11,"../styles/layout.css":17,"../styles/typography.css":18}],
+}, {"/templates/layout.hbs":16,"/lib/component":11}],
 16: [function(require, module, exports) {
 var Handlebars = require("handlebars-runtime");
 module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -23203,28 +23266,22 @@ module.exports = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":fu
     + "\n</div>\n";
 },"useData":true});
 }, {"handlebars-runtime":12}],
-17: [function(require, module, exports) {
-module.exports = '\nbody {\n  box-sizing: border-box;\n  padding: 0;\n  margin: 0;\n\n	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;\n	font-size: 15px;\n	line-height: 1.42857143;\n  background-color: #EEE;\n}\n\nbody, a {\n  color: #23232F;\n}\n\n.page {\n  color: #23232F;\n  background: white;\n  max-width: 1200px;\n  box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.12);\n  margin: 0 auto 0 auto;\n  box-sizing: border-box;\n  padding: 2rem;\n  padding-bottom: 4em;\n}\n\n.page-title {\n  padding-left: 2rem;\n  font-size: 24px;\n}\n';
-}, {}],
-18: [function(require, module, exports) {
-module.exports = '\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\n.h1,\n.h2,\n.h3,\n.h4,\n.h5,\n.h6 {\n  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;\n  font-weight: 400;\n  line-height: 1.1;\n  color: inherit;\n}\nh1 small,\nh2 small,\nh3 small,\nh4 small,\nh5 small,\nh6 small,\n.h1 small,\n.h2 small,\n.h3 small,\n.h4 small,\n.h5 small,\n.h6 small,\nh1 .small,\nh2 .small,\nh3 .small,\nh4 .small,\nh5 .small,\nh6 .small,\n.h1 .small,\n.h2 .small,\n.h3 .small,\n.h4 .small,\n.h5 .small,\n.h6 .small {\n  font-weight: normal;\n  line-height: 1;\n  color: #b4bcc2;\n}\nh1,\n.h1,\nh2,\n.h2,\nh3,\n.h3 {\n  margin-top: 21px;\n  margin-bottom: 10.5px;\n}\nh1 small,\n.h1 small,\nh2 small,\n.h2 small,\nh3 small,\n.h3 small,\nh1 .small,\n.h1 .small,\nh2 .small,\n.h2 .small,\nh3 .small,\n.h3 .small {\n  font-size: 65%;\n}\nh4,\n.h4,\nh5,\n.h5,\nh6,\n.h6 {\n  margin-top: 10.5px;\n  margin-bottom: 10.5px;\n}\nh4 small,\n.h4 small,\nh5 small,\n.h5 small,\nh6 small,\n.h6 small,\nh4 .small,\n.h4 .small,\nh5 .small,\n.h5 .small,\nh6 .small,\n.h6 .small {\n  font-size: 75%;\n}\nh1,\n.h1 {\n  font-size: 39px;\n}\nh2,\n.h2 {\n  font-size: 32px;\n}\nh3,\n.h3 {\n  font-size: 26px;\n}\nh4,\n.h4 {\n  font-size: 19px;\n}\nh5,\n.h5 {\n  font-size: 15px;\n}\nh6,\n.h6 {\n  font-size: 13px;\n}\np {\n  margin: 0 0 10.5px;\n}\n';
-}, {}],
 6: [function(require, module, exports) {
 'use strict';
 
 var apps = require('/templates/apps.hbs');
 
 var component = {
-	init: function init() {},
-	render: function render(params) {
+  init: function init() {},
+  render: function render(params) {
 
-		return apps(params);
-	}
+    return apps(params);
+  }
 };
 
 module.exports = component;
-}, {"/templates/apps.hbs":19}],
-19: [function(require, module, exports) {
+}, {"/templates/apps.hbs":17}],
+17: [function(require, module, exports) {
 var Handlebars = require("handlebars-runtime");
 module.exports = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper;
