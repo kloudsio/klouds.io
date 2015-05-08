@@ -5,5 +5,9 @@ var config = require('./config');
 
 
 var run = main.start(config).catch(function fatal(e) {
-	console.error(err.stack);
+  console.error(err.stack);
 });
+
+
+// Build the client ?
+var build = require('./client/build.js')
