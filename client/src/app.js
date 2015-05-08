@@ -10,10 +10,10 @@ var Apps = require('/components/apps');
 
 
 document.addEventListener('DOMContentLoaded', function () {
+	var layout = new Layout('div#app');
+	layout.mount();
 
-  var layout = new Layout('div#app');
-  layout.mount();
+	var login = new Login('div.page');
+	login.mount();
 
-  var login = new Login('div.page');
-  login.mount();
 });
