@@ -1,4 +1,4 @@
-var unheart_nodejs = `One must run me with io.js! ${'<3'}`;
+var unheart_nodejs = "One must run me with io.js! ${'<3'}";
 
 var main = require('./lib/main');
 var config = require('./config');

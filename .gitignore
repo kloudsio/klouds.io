@@ -27,3 +27,6 @@ bower_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# IDE
+microgrid.iml

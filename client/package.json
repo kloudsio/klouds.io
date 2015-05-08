@@ -4,9 +4,6 @@
   "description": "Client of MetaDev",
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "duo-watch": "^0.1.1"
-  },
   "scripts": {
     "build": "DEBUG=duo* nodemon -i /build/ build.js"
   },
@@ -15,7 +12,6 @@
     "co": "^4.5.2",
     "duo": "^0.11.3",
     "duo-babel": "^5.2.0",
-    "duo-handlebars": "^0.1.0",
-    "duo-watch": "^0.1.1"
+    "duo-handlebars": "^0.1.0"
   }
 }
