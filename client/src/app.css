@@ -1,6 +1,3 @@
+@import 'styles/paint.css';
 @import 'styles/layout.css';
 @import 'styles/typography.css';
-
-body {
-	background: #222222;
-}

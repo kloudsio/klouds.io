@@ -22,9 +22,6 @@ var state = {
   on: on,
   user: null,
   token: null,
-  qwest: {
-    dataType: 'json',
-  },
 }
 
 module.exports = state;
