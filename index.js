@@ -4,11 +4,7 @@ var main = require('./lib/main');
 var config = require('./config');
 
 
-var run = main(config)
-  .catch(function fatal(e) {
-    console.error(e.stack);
-  });
-
-
-// // Build the client ?
-var build = require('./client/build.js')
+var run = main.start(config)
+	.catch(function fatal(e) {
+		console.error(e.stack);
+	});

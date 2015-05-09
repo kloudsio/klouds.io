@@ -16,7 +16,7 @@ DUO := duo
 # Command Flags
 #
 
-DUO_FLAGS := --use ./plugins.js
+DUO_FLAGS := --use ./lib/plugins.js
 
 ifeq ($(NODE_ENV),development)
 	DUO_FLAGS += --development
@@ -31,6 +31,7 @@ endif
 JS := $(wildcard app.js)
 CSS := $(wildcard app.css)
 PUBLIC := $(wildcard public/*)
+POLYFILL := node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
 # JS += $(shell find ../ -path '*/client/index.js')
 # CSS := $(shell find -path 'index.css')
 # PUBLIC := $(shell find -path 'public/*')
@@ -39,12 +40,16 @@ PUBLIC := $(wildcard public/*)
 # Build.
 #
 
-build: node_modules  $(addprefix build/, $(PUBLIC) $(CSS) $(JS))
+
+build: node_modules polyfill $(addprefix build/, $(PUBLIC) $(CSS) $(JS))
+	@[ -d build ] || mkdir build
 .PHONY: build
+
 
 #
 # Target for `build/*.js` files.
 #
+
 
 build/%.js: %.js
 	$(DUO) $(DUO_FLAGS) $<
@@ -54,10 +59,14 @@ build/%.js: %.js
 #
 
 build/%.css: %.css
-	$(DUO) $(DUO_FLAGS) $<
+	(DUO) $(DUO_FLAGS) $<
 
 build/public/%: public/%
-	cp $< build/$*
+	@cp  $< build
+
+polyfill: node_modules
+	@[ -f build/browser-polyfill ] || cp $(POLYFILL) build
+
 
 #
 # Target for `node_modules` folder.
