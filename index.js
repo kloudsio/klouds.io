@@ -11,4 +11,4 @@ var run = main(config)
 
 
 // // Build the client ?
-// var build = require('./client/build.js')
+var build = require('./client/build.js')
