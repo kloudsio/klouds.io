@@ -8,7 +8,7 @@ var config = {
 	port: 5080,
 
 	modules: {
-		'/user': './user',
+		'/user': './user'
 		// '/payment': './payment',
 		// '/godmode': './dev-interface',
 	},
@@ -18,11 +18,11 @@ var config = {
 	},
 
 	jwt: {
-		secret: secrets.jwt,
+		secret: secrets.jwt
 	},
 
 	stripe_sync: false,
-	stripe_sk: secrets.stripe,
+	stripe_sk: secrets.stripe
 
 };
 
@@ -47,7 +47,7 @@ function get(key, defaults) {
 	if (typeof res !== 'undefined')
 		return res;
 
-	throw `Configuration not found: ${key}`;
+	throw "Configuration not found: ${key}";
 }
 
 module.exports = _.memoize(get);
