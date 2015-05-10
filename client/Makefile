@@ -31,6 +31,7 @@ endif
 JS := $(wildcard app.js)
 CSS := $(wildcard app.css)
 PUBLIC := $(wildcard public/*)
+PUBLIC_BUILD := $(patsubst public/%, %,$(wildcard public/*))
 POLYFILL := node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
 # JS += $(shell find ../ -path '*/client/index.js')
 # CSS := $(shell find -path 'index.css')
@@ -41,10 +42,9 @@ POLYFILL := node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
 #
 
 
-build: node_modules polyfill $(addprefix build/, $(PUBLIC) $(CSS) $(JS))
+build: node_modules polyfill $(addprefix build/, $(PUBLIC_BUILD) $(CSS) $(JS))
 	@[ -d build ] || mkdir build
 .PHONY: build
-
 
 #
 # Target for `build/*.js` files.
@@ -61,8 +61,8 @@ build/%.js: %.js
 build/%.css: %.css
 	(DUO) $(DUO_FLAGS) $<
 
-build/public/%: public/%
-	@cp  $< build
+build/%: $(PUBLIC)
+	cp $< $@
 
 polyfill: node_modules
 	@[ -f build/browser-polyfill ] || cp $(POLYFILL) build
