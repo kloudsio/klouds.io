@@ -1,20 +1,12 @@
 /** @jsx element */
 import {tree,render,element} from 'segmentio/deku';
+import {Layout} from './elements/layout.js';
+import {Login} from './elements/login.js';
 
+var layout = tree(
+	<Layout title="Klouds.io">
+		<Login></Login>
+	</Layout>
+)
 
-// Create a component
-var HelloWorld = {
-  render({ props, state }) {
-    return (
-      <div>{props.children}</div>
-    )
-  }
-}
-
-// Create a tree
-var app = tree(<HelloWorld>Hello World</HelloWorld>)
-
-// document.addEventListener('DOMContentLoaded', function () {
-	// Render the tree to the DOM
-	render(app, document.querySelector('main'))
-// });
+render(layout, document.querySelector('main'))

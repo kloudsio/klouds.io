@@ -1,58 +1,42 @@
-var Element = require('../lib/element.js');
-var template = require('./templates/login.hbs');
+/** @jsx element */
+import { element } from 'segmentio/deku'
 
-var co = require('tj/co');
-var api = require('../lib/api.js');
+import { user } from '../lib/api.js'
 
 
-class Login extends Element {
-  constructor() {
-    super();
+export let Login = {
+  render(component) {
+    let { props, state } = component;
 
-    this.eventify('register', 'button[name="register"]', 'click');
-    this.eventify('login', 'button[name="login"]', 'on', 'click');
-    // this.propify('password', 'input[type=password]', 'property', 'value');
-    // this.propify('email', 'input[type=email]', 'property', 'value');
-  }
-
-  render(data) {
-    return template(data);
-  }
-
-  bind() {
-    this.login.on('click', this.onLogin.bind(this));
-    this.register.on('click', this.onRegister.bind(this));
-  }
-
-  unbind() {
-    this.login.on('click', null);
-    this.register.on('click', null);
-  }
-
-  onLogin(data) {
-    var data = {
-      email: this.email.property('value'),
-      password: this.password.property('value')
+    function onLogin() {
+      user.login(component.getData()).then((res) => {
+        console.log(`User Login: ${JSON.stringify(res, false, 2)}`);
+      });
     }
 
-    co(function* () {
-      var res = yield api.user.login(data);
-      console.log(`User Login: ${JSON.stringify(res, false, 2)}`);
-    });
-  }
-
-  onRegister(data) {
-    var data = {
-      email: this.email.property('value'),
-      password: this.password.property('value')
+    function onRegister() {
+      user.register(component.getData()).then((res) => {
+        console.log(`User Register: ${JSON.stringify(res, false, 2)}`);
+      });
     }
 
-    co(function* () {
-      var res = yield api.user.register(data);
-      console.log(`User Login: ${JSON.stringify(res, false, 2)}`);
-    });
+    return (
+      <div class="dashboard row">
+      	<div class="box">
+    			<input type="email" />
+    			<input type="password" />
+    			<button onClick={onLogin} type="button" name="login">Login</button>
+    			<button onClick={onRegister} type="button" name="register">Register</button>
+      	</div>
+      </div>);
+  },
 
+  afterRender(component, el) {
+    component.getData = () => {
+      return {
+        email: el.querySelector('input[type=email]').value,
+        password: el.querySelector('input[type=password]').value,
+      };
+    }
   }
 }
-
-module.exports = Login;

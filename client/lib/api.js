@@ -4,7 +4,7 @@ var superagent = require('visionmedia/superagent');
 var transforms = require('./transforms.js');
 var state = require('./state.js');
 
-var apiSpec = {
+var api = {
   user: {
     register: register,
     login: login,
@@ -16,25 +16,26 @@ var apiSpec = {
   }
 };
 
-function* login(data) {
-  var res = yield superagent
-    .post('/user/login')
-    .send(data)
-    .set('Accept', 'application.json')
-    .end();
-  transforms.login(res);
-  return res;
+function login(data) {
+  let p = Promise.defer();
+  superagent.post('/user/login').send(data)
+    .set('Accept', 'application/json')
+    .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
+
+
+  return p.then((res) => {
+    transforms.login(res);
+  });
 }
 
-function* register(data) {
-  var res = yield superagent
-    .post('/user/create')
-    .send(data)
-    .set('Accept', 'application.json')
-    .end();
-  if (!res)
-    return false;
-  return yield login(data);
+function register(data) {
+  let p = Promise.defer();
+
+  superagent.post('/user/create').send(data)
+    .set('Accept', 'application/json')
+    .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
+
+  return p.then(login);
 }
 
-module.exports = apiSpec;
+export default api;
