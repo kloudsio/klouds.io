@@ -1,23 +1,17 @@
-var template = require('./templates/layout.hbs');
 var Element = require('../lib/element.js');
+var template = require('./templates/layout.hbs');
 
 class Layout extends Element {
-	constructor(selection) {
-		super(selection);
-	}
+  constructor() {
+    super();
+    this.set('title', () => 'MicroGrid');
+    this.set('body', () => 'La Bedy');
+  }
 
-	render() {
-		return template({
-			title: '',
-			body: ''
-		});
-	}
-
-	mount() {
-		this.select.html(this.render());
-	}
-
-	unmount() {}
+  render(state) {
+    console.log('MicroGrid!');
+    return template(state);
+  }
 }
 
 module.exports = Layout;

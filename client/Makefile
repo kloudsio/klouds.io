@@ -6,96 +6,68 @@ NODE := iojs
 NODE_ENV ?= development
 
 #
-# Binaries
+# Duo
 #
 
-BIN := ./node_modules/.bin
-DUO := duo
-
-#
-# Command Flags
-#
-
-DUO_FLAGS := --use ./lib/plugins.js
+DUO := duo --use ./lib/plugins.js
 
 ifeq ($(NODE_ENV),development)
-	DUO_FLAGS += --development
+	DUO += --development
 else
-	DUO_FLAGS += --external-source-maps
+	DUO += --external-source-maps
 endif
 
 #
-# Wildcards.
+# Wildcards. (Not so wild)
 #
 
-JS := $(wildcard app.js)
-CSS := $(wildcard app.css)
 PUBLIC := $(wildcard public/*)
-PUBLIC_BUILD := $(patsubst public/%, %,$(wildcard public/*))
-POLYFILL := node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
-# JS += $(shell find ../ -path '*/client/index.js')
-# CSS := $(shell find -path 'index.css')
-# PUBLIC := $(shell find -path 'public/*')
-
-#
-# Build.
-#
+PUBLIC_TARGET := $(patsubst public/%, build/%, $(wildcard public/*))
 
 
-build: node_modules polyfill $(addprefix build/, $(PUBLIC_BUILD) $(CSS) $(JS))
-	@[ -d build ] || mkdir build
-.PHONY: build
 
-#
-# Target for `build/*.js` files.
-#
+.PHONY: all
 
 
-build/%.js: %.js
-	$(DUO) $(DUO_FLAGS) $<
-
-#
-# Target for `build/*.css` files.
-#
-
-build/%.css: %.css
-	(DUO) $(DUO_FLAGS) $<
-
-build/%: $(PUBLIC)
-	cp $< $@
-
-polyfill: node_modules
-	@[ -f build/browser-polyfill ] || cp $(POLYFILL) build
+all: install build watch
 
 
-#
-# Target for `node_modules` folder.
-#
+
+.PHONY: build watch
+
+
+build: app.js app.css
+	@$(DUO) -C $^
+
+watch: app.js app.css
+	@$(DUO) --watch -C $^
+
+
+
+.PHONY: install
+
+
+install: node_modules $(PUBLIC_TARGET) build/browser-polyfill.js
 
 node_modules: package.json
 	npm install
 
-#
-# Clean.
-#
+build/%: $(PUBLIC)
+	@mkdir build
+	cp $^ $@
 
-clean: clean-build
+build/browser-polyfill.js: node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
+	cp $< $@
+
+
+
 .PHONY: clean
 
-#
-# Clean generated build.
-#
 
-clean-build:
+clean: clean
 	@rm -rf build
-	@$(DUO) clean-cache --quiet
-.PHONY: clean-build
 
-#
-# Clean downloaded dependencies
-#
-
+.PHONY: clean-deps
 clean-deps:
 	@rm -rf node_modules components
 	@npm cache clean
-.PHONY: clean-deps

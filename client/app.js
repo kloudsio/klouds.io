@@ -1,19 +1,20 @@
-var _ = require('lodash/lodash')
-var d3 = require('mbostock/d3');
-
-var Login = require('./elements/login.js');
-var Layout = require('./elements/layout.js');
-var Apps = require('./elements/apps.js');
+/** @jsx element */
+import {tree,render,element} from 'segmentio/deku';
 
 
-// var config = require('/../config/config.yaml');
+// Create a component
+var HelloWorld = {
+  render({ props, state }) {
+    return (
+      <div>{props.children}</div>
+    )
+  }
+}
 
+// Create a tree
+var app = tree(<HelloWorld>Hello World</HelloWorld>)
 
-document.addEventListener('DOMContentLoaded', function () {
-  var layout = new Layout('div#app');
-  layout.mount();
-
-
-  var login = new Login('div.page');
-  login.mount();
-});
+// document.addEventListener('DOMContentLoaded', function () {
+	// Render the tree to the DOM
+	render(app, document.querySelector('main'))
+// });
