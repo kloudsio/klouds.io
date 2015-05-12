@@ -1,13 +1,25 @@
 # Front-End Client
 
-This is the web application section of MicroGrid
 
+The Front-End Client is a **Single-Page Application**.
 
-## Understanding the Design
+A Single-Page Application should...
 
-The client is a **Single-Page Application**, it changes document.location and never reloads. It only sends AJAX requests to the server API. All page rendering occurs in the browser.
+- manage it's own state
+- not reload
+- handle routing via URL
+- handle page transitions
+- fetch data with XHR & WebSockets
+- do rendering client-side
+- authenticate using JWT tokens.
 
 The app embraces a modular philosophy. It comprises mostly of web components. This requires some build tools.
+
+**Make:** runs the builds, installs, cleaning.
+
+**Duo:** package manager & file bundler with great plugins and loaders for different formats (like markdown, handlebars, or yaml).
+
+**Babel:** ES6 features via browser polyfills. Better code.
 
 An overview of the files.
 
