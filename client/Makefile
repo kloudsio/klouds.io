@@ -9,7 +9,7 @@ NODE_ENV ?= development
 # Duo
 #
 
-DUO := duo --use ./lib/plugins.js
+DUO := duo --use ./lib/plugins.js --use duo-yaml
 
 ifeq ($(NODE_ENV),development)
 	DUO += --development

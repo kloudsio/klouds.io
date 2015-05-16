@@ -1,13 +1,28 @@
-var apps = require('./templates/apps.hbs');
+/** @jsx element */
+import { element } from 'segmentio/deku';
 
-var component = {
-	init: function () {
 
-	},
-	render: function (params) {
+export let Grid = {
+	render(component) {
+		let { props, state } = component;
 
-		return apps(params);
+
+		return (
+			<div class="app-grid">
+			  {props.children}
+			</div>
+		);
 	}
 }
 
-module.exports = component;
+export let Item = {
+	render(component) {
+		let { props, state } = component;
+
+		return (
+			<button class="app-item" onClick={props.onOpen}>
+				{props.children}
+			</button>
+		)
+	}
+}

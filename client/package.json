@@ -1,13 +1,12 @@
 {
-	"name": "metadev-client",
-	"version": "1.0.0",
-	"description": "Client of MetaDev",
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"co": "^4.5.4",
-		"duo-babel": "^5.4.0",
-		"duo-handlebars": "^0.1.0"
-	},
-	"devDependencies": {}
+  "name": "metadev-client",
+  "version": "1.0.0",
+  "description": "Client of MetaDev",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "co": "^4.5.4",
+    "duo-babel": "^5.4.0",
+    "duo-yaml": "0.0.1"
+  }
 }

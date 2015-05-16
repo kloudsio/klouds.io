@@ -1,4 +1,18 @@
 body {
-	background-color: linear-gradient(#333639, #393434);
-	padding: 10px;
+	color: #A2D2E6;
+	background: linear-gradient(#333639, #393531);
+}
+
+text {
+	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 50px;
+	font-weight: bold;
+
+	fill: none;
+	stroke: #A2D2E6;
+	stroke-linejoin: miter;
+	stroke-width: 1px;
+
+	stroke-dashoffset: 0;
+	stroke-dasharray: 0 1200 0;
 }

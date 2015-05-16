@@ -1,8 +1,6 @@
-var superagent = require('visionmedia/superagent');
-// var supercouch = require('qualiancy/supercouch');
-
-var transforms = require('./transforms.js');
-var state = require('./state.js');
+import superagent from 'visionmedia/superagent';
+import transforms from './transforms.js';
+import state from './state.js';
 
 var api = {
   user: {

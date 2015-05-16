@@ -1,7 +1,6 @@
 /** @jsx element */
-import { element } from 'segmentio/deku'
-
-import { user } from '../lib/api.js'
+import { element } from 'segmentio/deku';
+import { user } from '/lib/api.js';
 
 
 export let Login = {
