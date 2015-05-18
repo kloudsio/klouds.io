@@ -1,5 +1,25 @@
-@import 'kristoferjoseph/flexboxgrid';
+@import 'necolas/normalize.css';
 
-@import './elements/styles/paint.css';
-@import './elements/styles/layout.css';
-@import './elements/styles/typography.css';
+@import 'kristoferjoseph/flexboxgrid:/dist/flexboxgrid.min.css';
+
+:root {
+	--outlines: #A2D2E6;
+	--background: linear-gradient(#333639, #393531);
+	--gutters: 10px;
+}
+
+
+::placeholder {
+  opacity: .4;
+  transition: opacity 1s;
+
+}
+
+:focus::placeholder {
+  opacity: .2;
+}
+
+
+@import './styles/paint.css';
+
+@import './styles/layout.css';

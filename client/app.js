@@ -4,35 +4,33 @@ import { tree, render, element} from 'segmentio/deku';
 var apps = require('./apps.yaml');
 
 import { Layout } from './elements/layout.js';
+import { LogoText } from './elements/logo-text.js';
 import { Login } from './elements/login.js';
 import { Grid, Item } from './elements/apps.js';
+import { Profile } from './elements/profile.js';
 
 
-console.log(apps);
+import Confirmation from 'component/confirmation';
 
-let items = apps.map((item) => (
-	<Item>
+
+
+let items = apps.map((item) => {
+	item.open = function() {
+		alert("hello world. my world of worlds");
+		console.log(JSON.stringify(item));
+	}
+	return <Item onOpen={item.open}>
 		{item.name}
 	</Item>
-));
+});
 
 
-let options = [
-	{
-		id: 'add github',
-		name: 'Any Github Folder'
-	}, {
-		id: 'add upload',
-		name: 'A Directory'
-	}, {
-		id: 'add code',
-		name: 'html, js, etc.'
-	}
-];
 
 
 var layout = tree(
 	<Layout>
+		<LogoText>Klouds.io</LogoText>
+		<Profile />
 		<Login />
 		<Grid>{items}</Grid>
 	</Layout>

@@ -4,12 +4,15 @@
 
 var babel = require('duo-babel')
 var yaml = require('duo-yaml');
+var myth = require('duo-myth');
 
 var plugins = [
-  yaml,
   babel({
-    onlyLocals: true
+    onlyLocals: true,
+    // ignore: /node_modules/
   }),
+  yaml(),
+  myth(),
 ];
 
 module.exports = plugins;

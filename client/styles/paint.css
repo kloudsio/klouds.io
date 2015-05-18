@@ -1,0 +1,39 @@
+body {
+	color: var(--outlines);
+	background: var(--background);
+}
+
+.logo text {
+	stroke: var(--outlines);
+	fill: none;
+
+	font-weight: bold;
+  paint-order:fill;
+	text-rendering: optimizeLegibility;
+	stroke-linejoin: miter;
+	stroke-width: 0.5;
+
+	stroke-dashoffset: 0;
+	stroke-dasharray: 0 1200 0;
+}
+
+.app-grid {
+}
+
+.app-item {
+	height: 100px;
+}
+
+input, button {
+  font-variant: all-small-caps;
+	background: none;
+	border: 1px solid var(--outlines);
+	color: var(--outlines);
+}
+
+
+.login input {
+  font-variant: all-small-caps;
+  background: none;
+  border: 1px solid
+}

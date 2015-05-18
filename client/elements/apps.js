@@ -6,9 +6,8 @@ export let Grid = {
 	render(component) {
 		let { props, state } = component;
 
-
 		return (
-			<div class="app-grid">
+			<div class="row app-grid">
 			  {props.children}
 			</div>
 		);
@@ -20,7 +19,7 @@ export let Item = {
 		let { props, state } = component;
 
 		return (
-			<button class="app-item" onClick={props.onOpen}>
+			<button class="col-xs-2 box app-item" onClick={props.onOpen}>
 				{props.children}
 			</button>
 		)

@@ -4,7 +4,7 @@
   repo:
 - name: ReactionCommerce
   repo: reactioncommerce/reaction
-- name: gogs
+- name: Gogs
   repo: gogits/gogs
 - name: Journey
   repo: kabukky/journey
