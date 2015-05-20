@@ -1,6 +1,6 @@
 @import 'necolas/normalize.css';
 
-@import 'kristoferjoseph/flexboxgrid:/dist/flexboxgrid.min.css';
+@import 'kristoferjoseph/flexboxgrid';
 
 :root {
 	--outlines: #A2D2E6;

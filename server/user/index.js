@@ -7,11 +7,11 @@ var routes = require('./routes');
 
 
 
-module.exports = function* () {
-	this.use(userStore);
+module.exports = function* (app, context) {
+	app.use(userStore);
 
 	var router = jrouter();
 	router.route(routes.create);
 	router.route(routes.login);
-	this.use(router.middleware());
+	app.use(router.middleware());
 }

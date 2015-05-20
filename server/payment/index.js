@@ -5,19 +5,19 @@ var costripe = require('./co-stripe');
 var plans = require('./plans');
 var routes = require('./routes');
 
-module.exports = function* () {
+module.exports = function* (app, ctx) {
 
-  costripe(this.config('stripe_sk'));
+  costripe(ctx.config('stripe_sk'));
 
-  if (this.config('stripe_sync')) {
-    this.info('syncing stripe...');
+  if (ctx.config('stripe_sync')) {
+    ctx.info('syncing stripe...');
     yield plans.sync;
-    this.info('stripe sync complete.');
+    ctx.info('stripe sync complete.');
   }
 
   // KOA
   var payments = router();
-  this.use(payments.middleware());
+  app.use(payments.middleware());
 
   // Routes
   payments.post('/subscribe', routes.createSubscription);

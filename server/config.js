@@ -8,13 +8,12 @@ var config = {
 	port: 5080,
 
 	modules: {
-		'/user': './user'
-		// '/payment': './payment',
-		// '/godmode': './dev-interface',
+		'/user': './user',
+		'/payment': './payment',
 	},
 
 	assets: {
-		'/': pathJoin(__dirname, 'client/build')
+		'/': pathJoin(__dirname, '../build')
 	},
 
 	jwt: {

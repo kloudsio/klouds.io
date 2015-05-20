@@ -1,15 +1,29 @@
 
-.page {
+body {
   position: relative;
+  width: 100%;
+  left: 50%;
+}
+
+.page {
+  position: absolute;
   margin: 0 auto 0 auto;
   max-width: 1200px;
 
+  transform: translate3d(-50%, 0, 0);
   box-sizing: border-box;
+}
+
+.spacer {
+  display: block;  
+  width: 100%;
+  height: 1em;
 }
 
 .app-grid {
 
 }
+
 .app-item {
 
 }

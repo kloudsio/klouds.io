@@ -13,10 +13,10 @@ var util = require('./util');
 var app = koa();
 var log = util.logma('main');
 
-
+var config;
 
 // Serve Assets
-function serveAssets(config) {
+function serveAssets() {
 	_.forEach(config('assets'), function (path, key) {
 		log.log('serving static files at' + path);
 		app.use(serve(path, {
@@ -25,39 +25,49 @@ function serveAssets(config) {
 	});
 }
 
-function* loadApps(config) {
+function context(prefix) {
+	var ctx = {	config: config };
+
+	_.assign(ctx, util.logma(prefix));
+
+	return ctx;
+}
+
+function* loadApps() {
 	var modules = config('modules');
 	var apps = {};
 
-	yield _.mapValues(modules, function (dir, url) {
-		var mountable = apps[url] = koa();
+	yield _.mapValues(modules, function (dir, prefix) {
+		var app = koa();
+		var ctx = context(prefix);
+		_.assign(app.context, ctx);
 
-		mountable.use(function* (next) {
-			this.config = config;
-			_.assign(this, util.logma(url));
+		app.use(function* (next) {
 			this.info(this.request.path);
 			yield next;
 		});
 
-		return require(pathJoin('../', dir)).apply(mountable);
+		apps[prefix] = app;
+
+		return ( require(pathJoin('../', dir)) )(app, ctx);
 	});
-	
+
 	return apps;
 }
 
 /**
  * Load the Modules, Compose & Run the Application
  */
-module.exports.start = co.wrap(function* (config) {
+module.exports.start = co.wrap(function* (cfg) {
+	config = cfg;
 
-	serveAssets(config);
+	serveAssets();
 
-	var apps = yield loadApps(config);
-	console.log(apps);
+	var apps = yield loadApps();
 
-	_.forEach(apps, function (v, url) {
-		log.log('mounted ', url);
-		app.use(mount(url, v));
+	_.forEach(apps, function (v, prefix) {
+		log.log('mounted ', prefix);
+		app.use(mount(prefix, v));
 	});
 
 	log.log("binding server to port ${config('port')}");
