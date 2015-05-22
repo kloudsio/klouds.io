@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io//.png?label=ready&title=Ready)](http://waffle.io//)
+[![Stories in Ready](https://badge.waffle.io/metadevfoundation/microgrid.svg?label=ready&title=Ready)](http://waffle.io/metadevfoundation/microgrid)
 
 
 # microgrid
