@@ -8,8 +8,11 @@ var myth = require('duo-myth');
 
 var plugins = [
   babel({
-    onlyLocals: true,
-    // ignore: /node_modules/
+    only: [
+        'client/app.js',
+        'client/lib/browser-polyfill.js',
+        'client/elements/**.js'
+    ]
   }),
   yaml(),
   myth(),

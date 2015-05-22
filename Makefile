@@ -4,16 +4,10 @@
 
 NODE := iojs
 NODE_ENV ?= development
-OUTPUT := build
 
 
-DUO := duo
-DUO += --development
-DUO += --root ./client
-DUO += --output ../$(OUTPUT)
-DUO += --use lib/plugins.js
+DUO := duo -u client/plugins.js -o build --development
 
-# production: DUO += --external-source-maps
 
 .PHONY: all setup bundle app serve
 
@@ -23,36 +17,37 @@ DUO += --use lib/plugins.js
 # Commands
 #
 
-all: setup bundle
-
-
+all: setup bundle serve
 
 
 #
 # Setup
 #
-setup: server/node_modules client/node_modules $(OUTPUT)/browser-polyfill.js
+
+setup: server/node_modules client/node_modules build/browser-polyfill.js build/js-csp.js
 
 %/node_modules: %/package.json
 	@cd $* && npm install
 
 
-$(OUTPUT)/browser-polyfill.js: client/node_modules/duo-babel/node_modules/babel-core/browser-polyfill.js
-	@mkdir $(OUTPUT)
+build/%.js: client/libraries/%.js
+	@ [ -d build ] || mkdir build
 	@cp $< $@
-
 
 
 #
 # Bundle app
 #
-bundle: compile $(OUTPUT)/index.html
 
-compile:
-	$(DUO) -C app.js app.css
+bundle: entries build/index.html
+
+entries:
+	@$(DUO) client/app.css
+	@$(DUO) client/app.js
+	
 
 
-$(OUTPUT)/index.html: client/index.html
+build/index.html: client/index.html
 	cp $< $@
 
 
@@ -68,16 +63,20 @@ serve:
 #
 # Cleaning Up
 #
-.PHONY: clean clean-build clean-npm clean-duo
-clean: clean-build clean-npm clean-duo
+
+
+clean: clean-build clean-duo
 
 clean-build:
-	@rm -rf $(OUTPUT)
-	@mkdir $(OUTPUT)
+	@rm -rf build
+	@mkdir build
 
 clean-npm:
-	@rm -rf client/node_modules
-	@npm cache clean
+	@ rm -rf client/node_modules
+	@ rm -rf server/node_modules
+	npm cache clean
 
 clean-duo:
-	@rm -rf client/components
+	@rm -rf ./components
+
+.PHONY: clean clean-build clean-npm clean-duo

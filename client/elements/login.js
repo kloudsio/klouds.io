@@ -7,13 +7,7 @@ export let Login = {
   render(component) {
     let { el, props, state } = component;
 
-    let login = function(e) {
-      use(props.onLogin)
-    }
-
-    let register = function() {
-
-    }
+    [login, register] = props[login, register]
 
     component.data = () => {
       console.log(this);

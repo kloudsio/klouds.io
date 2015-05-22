@@ -1,58 +1,48 @@
-/** @jsx element */
-import { tree, render, element} from 'segmentio/deku';
 
-var apps = require('./apps.yaml');
+let appinfo = require('./apps.yaml')
 
-import { Page } from './elements/page.js';
-import { LogoText } from './elements/logo-text.js';
-import { Login } from './elements/login.js';
-import { Grid, Item } from './elements/apps.js';
-// import { Profile } from './elements/profile.js';
+import layout from './elements/layout.js'
 
-// import Confirmation from 'component/confirmation';
 
-let listen = {
-		login: function(e, component) {
-			console.log(component.data());
+import csp from './libraries/js-csp.js'
 
+// csp util method
+
+let putter = (ev) => csp.putAsync(available, ev, function() {})
+
+// returns function(cb)
+function ixo(gen) {
+	let x = csp.chan(csp.buffers.dropping(1));
+	csp.go(gen.apply(csp, x));
+
+	return ev => csp.putAsync(x, ev, () => {});
+}
+
+
+let itemify = (x) => <Item open={x.open}>{x.name}</Item>
+
+let events = {
+	login: ixo(function* () {
+		for (;;) {
+			var login = yield this.take();
+			console.log(login);
 		}
+	}),
+
+	register: ixo(function* () {
+
+	}),
+
+	item: ixo(function* () {
+
+	}),
 }
 
-let cascasions = {
-	becomeLoggedIn() {
-		console.log('Cascade')
-		console.log(this);
-		console.log(arguments);
-	},
-}
+
+let items = appinfo.map(itemify)
 
 
-let items = apps.map((item) => {
-	item.open = function() {
-		alert("hello world. my world of worlds");
-		console.log(JSON.stringify(item));
-	}
+// the deku tree
+console.log(items);
 
-	return <Item onOpen={item.open}>
-		{item.name}
-	</Item>
-});
-
-let Slash = {
-	render() {
-		return <div class="spacer" />
-	}
-}
-
-var top = tree(
-	<Page>
-		<LogoText>Klouds.io</LogoText>
-		<Login onLogin={listen.login} />
-		 <Slash />
-		<Grid>{items}</Grid>
-		 <Slash />
-	</Page>
-)
-top.cascasions = cascasions;
-
-render(top, document.querySelector('main'))
+layout(items, events);

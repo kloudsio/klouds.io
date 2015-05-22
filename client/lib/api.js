@@ -1,7 +1,6 @@
 
 import superagent from 'visionmedia/superagent';
 
-import transforms from './transforms.js';
 import state from './state.js';
 
 var api = {
@@ -24,7 +23,7 @@ function login(data) {
 
 
   return p.then((res) => {
-    transforms.login(res);
+    state.transforms.login(res);
   });
 }
 

@@ -5,11 +5,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "co": "^4.5.4",
-    "duo-babel": "^5.4.0",
-    "duo-yaml": "0.0.1"
   },
   "devDependencies": {
+    "duo-babel": "^5.4.0",
+    "duo-yaml": "0.0.1",
     "duo-myth": "^0.1.0"
   }
 }
