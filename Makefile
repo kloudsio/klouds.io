@@ -4,13 +4,7 @@
 
 NODE := iojs
 NODE_ENV ?= development
-
-
 DUO := duo -u client/plugins.js -o build --development
-
-
-.PHONY: all setup bundle app serve
-
 
 
 #
@@ -19,53 +13,42 @@ DUO := duo -u client/plugins.js -o build --development
 
 all: setup bundle serve
 
+setup: server/node_modules client/node_modules vendor
+vendor: build/browser-polyfill.min.js
+bundle: entries build/index.html
+clean: clean-build clean-duo
 
 #
 # Setup
 #
 
-setup: server/node_modules client/node_modules build/browser-polyfill.js build/js-csp.js
 
 %/node_modules: %/package.json
 	@cd $* && npm install
 
-
-build/%.js: client/libraries/%.js
+build/browser-polyfill.min.js: client/node_modules/duo-babel/node_modules/babel-core/browser-polyfill.min.js
 	@ [ -d build ] || mkdir build
 	@cp $< $@
 
-
 #
-# Bundle app
+# App
 #
 
-bundle: entries build/index.html
 
 entries:
 	@$(DUO) client/app.css
 	@$(DUO) client/app.js
 	
-
-
 build/index.html: client/index.html
 	cp $< $@
 
-
-
-#
-# Serve
-#
-
 serve:
 	node server/index.js
-
 
 #
 # Cleaning Up
 #
 
-
-clean: clean-build clean-duo
 
 clean-build:
 	@rm -rf build
@@ -79,4 +62,5 @@ clean-npm:
 clean-duo:
 	@rm -rf ./components
 
+.PHONY: all setup vendor bundle serve
 .PHONY: clean clean-build clean-npm clean-duo

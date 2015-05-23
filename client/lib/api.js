@@ -1,9 +1,9 @@
+import s from './state.js';
 
-import superagent from 'visionmedia/superagent';
+let superagent = require('visionmedia/superagent');
 
-import state from './state.js';
 
-var api = {
+export let api = {
   user: {
     register: register,
     login: login,
@@ -15,16 +15,14 @@ var api = {
   }
 };
 
+
 function login(data) {
   let p = Promise.defer();
   superagent.post('/user/login').send(data)
-    .accept('json')
-    .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
+  .accept('json')
+  .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
 
-
-  return p.then((res) => {
-    state.transforms.login(res);
-  });
+  return p;
 }
 
 function register(data) {
@@ -34,7 +32,6 @@ function register(data) {
     .accept('json')
     .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
 
-  return p.then(login);
+  return p;  
 }
 
-export default api;

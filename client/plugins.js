@@ -7,13 +7,7 @@ var yaml = require('duo-yaml');
 var myth = require('duo-myth');
 
 var plugins = [
-  babel({
-    only: [
-        'client/app.js',
-        'client/lib/browser-polyfill.js',
-        'client/elements/**.js'
-    ]
-  }),
+  babel({ onlyLocals: true }),
   yaml(),
   myth(),
 ];
