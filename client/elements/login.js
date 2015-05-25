@@ -5,21 +5,29 @@ import { user } from '../lib/api.js';
 
 export let Login = {
   render(component) {
-    let { el, props, state } = component
+    let { props, state } = component;    
 
-    component.data = () => {
-      return {
-        email: el.querySelector('input[type=email]').value,
-        password: el.querySelector('input[type=password]').value,
-      };
+    function email(component) {
+      return component.el.querySelector('input[type=email]').value;
+    }    
+
+    function password(component) {
+      return component.el.querySelector('input[type=password]').value;
     }
 
-    return (
-    	<div class="login">
-  			<input type="email" placeholder="email"/>
-  			<input type="password" placeholder="password"/>
-  			<button onClick={props.login} type="button" name="login">Login</button>
-  			<button onClick={props.register} type="button" name="register">Register</button>
-      </div>);
+
+    return (      
+      <div class="login">  		
+      	<input type="email" placeholder="email" />
+  			<input type="password" placeholder="password" />
+  			
+        <button onClick={props.onLogin} type="button" name="login">Login</button>
+  			<button onClick={props.onRegister} type="button" name="register">Register</button>      
+      </div>
+    );
   },
+  
+  afterRender(component) {
+    let { el, props, state } = component;
+  }
 }

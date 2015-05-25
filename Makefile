@@ -22,7 +22,6 @@ clean: clean-build clean-duo
 # Setup
 #
 
-
 %/node_modules: %/package.json
 	@cd $* && npm install
 
@@ -34,21 +33,20 @@ build/browser-polyfill.min.js: client/node_modules/duo-babel/node_modules/babel-
 # App
 #
 
-
 entries:
 	@$(DUO) client/app.css
 	@$(DUO) client/app.js
 	
 build/index.html: client/index.html
-	cp $< $@
+	@cp $< $@
 
 serve:
-	node server/index.js
+	@node server/index.js
+
 
 #
 # Cleaning Up
 #
-
 
 clean-build:
 	@rm -rf build

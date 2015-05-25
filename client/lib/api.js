@@ -1,37 +1,22 @@
-import s from './state.js';
+let superagent = require('visionmedia/superagent')
+let _ = require('lodash/lodash')
 
-let superagent = require('visionmedia/superagent');
+function thenz(endable) { 
+  let deferred = Promise.defer();    
+  let cb = (err, data) => err !== null ? deferred.reject(err) : deferred.resolve(data)
+  endable.end(cb);
+  return deferred;
+}
 
 
-export let api = {
-  user: {
-    register: register,
-    login: login,
+export let user = {
+  login(data) {
+    return thenz(superagent.post('/user/login').accept('json').send(data));
   },
-
-  subscription: {
-    create: null,
-    delete: null,
+  register(data) {
+    return thenz(superagent.post('/user/create').accept('json').send(data));
   }
-};
-
-
-function login(data) {
-  let p = Promise.defer();
-  superagent.post('/user/login').send(data)
-  .accept('json')
-  .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
-
-  return p;
 }
-
-function register(data) {
-  let p = Promise.defer();
-
-  superagent.post('/user/create').send(data)
-    .accept('json')
-    .end((err, res) => { err !== null ? p.reject(err) : p.resolve(res) });
-
-  return p;  
-}
-
+//    	this.qwest.headers = {
+//			Authorization: 'Bearer ' + token
+//		};

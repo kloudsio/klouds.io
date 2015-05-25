@@ -1,8 +1,26 @@
-import { element } from 'segmentio/deku'
 import layout from './elements/layout'
-import { Item } from './elements/apps'
+
+import { user } from './lib/api'
+import { transforms } from './lib/state'
 
 let items = require('./apps.yaml')
+
+
+function login(data) { 
+	user.login(data).then(function (res) {
+		transforms.login(res);
+	});
+}
+
+function register(data) { 
+	user.register(data).then(user.login);
+}
+
+
+
+// ignition.
+layout(items, { login: login, register: register });
+
 
 
 //import csp from './libraries/js-csp.js'
@@ -35,19 +53,3 @@ let items = require('./apps.yaml')
 //
 //	}),
 //}
-
-
-
-function onLogin(data) { 
-	api.login(data).then(function (res) {
-		state.transforms.login(res);
-	});
-}
-
-function onRegister(data) { 
-	api.register(data).then(api.login);
-}
-
-
-// ignition.
-layout(items, { login: onLogin, register: onRegister});
