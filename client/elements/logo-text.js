@@ -1,11 +1,10 @@
-/** @jsx element */
 import { element } from 'segmentio/deku';
 
 var Tweenable = require('jeremyckahn/shifty:dist/shifty.min.js');
 var tweenable = new Tweenable();
 
 
-export let LogoText = {
+export default {
 
   render(component) {
     let { props, state } = component;

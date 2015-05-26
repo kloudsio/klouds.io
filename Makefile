@@ -11,15 +11,20 @@ DUO := duo -u client/plugins.js -o build --development
 # Commands
 #
 
-all: setup build serve
+all: install build nodemon
 
-setup: server/node_modules client/node_modules vendor
-vendor: build/browser-polyfill.min.js
-build: entries build/index.html
+
+develop:
+	@cd server && iojs develop.js
+
+
+install: server/node_modules client/node_modules build/browser-polyfill.min.js
+build: build/index.html bundle
 clean: clean-build clean-duo
 
+
 #
-# Setup
+# install
 #
 
 %/node_modules: %/package.json
@@ -29,19 +34,32 @@ build/browser-polyfill.min.js: client/node_modules/duo-babel/node_modules/babel-
 	@ [ -d build ] || mkdir build
 	@cp $< $@
 
+
 #
-# App
+# Duo Bundle
 #
 
-entries:
-	@$(DUO) client/app.css
-	@$(DUO) client/app.js
-	
+bundle:
+	@$(DUO) client/app.css client/app.js
+		
+watch:
+	@sane '$(DUO) client/app.css client/app.js' client --glob='**/*'
+
+
+#
+# Static
+#
+
 build/index.html: client/index.html
 	@cp $< $@
 
-serve:
-	@node server/index.js
+
+#
+# Dev Server
+#
+
+nodemon:
+	@sane 'iojs server/index.js' server --glob='**/*'
 
 
 #
@@ -60,5 +78,6 @@ clean-npm:
 clean-duo:
 	@rm -rf ./components
 
-.PHONY: all setup vendor bundle serve
+.PHONY: all install bundle
+.PHONY: watch nodemon develop
 .PHONY: clean clean-build clean-npm clean-duo

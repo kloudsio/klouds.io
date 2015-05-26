@@ -10,17 +10,19 @@ var grid = new contrib.grid({rows: 12, cols: 12, screen: screen})
 var a = grid.set(0, 0, 6, 12, contrib.log, {
 	label: 'Client',
 	tags: true,
+	bufferLength: 10
 })
 
 var b = grid.set(6, 0, 6, 12, contrib.log, {
 	label: 'Server',
 	tags: true,
+	bufferLength: 10
 })
 
 screen.render()
 
-exec2log(a, 'make\ -C\ client');
-exec2log(b, 'make');
+exec2log(a, 'make\ -C\ ../ watch');
+exec2log(b, 'make\ -C\ ../ nodemon');
 
 function exec2log(widget, cmd) {
 	var obj = exec(cmd);

@@ -1,9 +1,8 @@
-/** @jsx element */
 import { element } from 'segmentio/deku'
 
 
 
-export let Profle = {
+export default = {
 
   render(component) {
 		let { props, state } = component;

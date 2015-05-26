@@ -1,3 +1,18 @@
+/*
+  The Opinionated Theme StyleSheet
+
+  Thou shalt not size thine box-models here.
+  Thou shalt not be thinking of dom-trees here.
+  Thou shalt not be positioning elements here.
+
+  Thou shalt follow your heart: #000000 >= heart >= #FFFFFF
+*/
+
+/*:root {
+	--outlines: #A2D2E6;
+	--background: linear-gradient(#333639, #393531);
+}*/
+
 body {
 	color: var(--outlines);
 	background: var(--background);
@@ -8,7 +23,7 @@ body {
 	fill: none;
 
 	font-weight: bold;
-  paint-order:fill;
+	paint-order:fill;
 	text-rendering: optimizeLegibility;
 	stroke-linejoin: miter;
 	stroke-width: 0.5;
@@ -18,6 +33,7 @@ body {
 }
 
 .app-grid {
+
 }
 
 .app-item {
@@ -25,7 +41,7 @@ body {
 }
 
 input, button {
-  font-variant: all-small-caps;
+ 	font-variant: all-small-caps;
 	background: none;
 	border: 1px solid var(--outlines);
 	color: var(--outlines);

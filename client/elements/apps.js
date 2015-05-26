@@ -1,27 +1,21 @@
-/** @jsx element */
 import { element } from 'segmentio/deku';
 
 
-export let Grid = {
+
+export default {
 	render(component) {
 		let { props, state } = component;
+		let apps = [];
 
-		return (
-			<div class="row app-grid">
-			  {props.children}
-			</div>
-		);
-	}
-}
+		
+		for(let app of props.apps) {
+			let onClick = function (e, component, setState) {
+				e.preventDefault();			
+				props.onApp(app);
+			}
+			apps.push(<button class="col-xs-2 box app-item" onClick={onClick}>{app.name}</button>)
+		}
 
-export let Item = {
-	render(component) {
-		let { props, state } = component;
-
-		return (
-			<button class="col-xs-2 box app-item" onClick={props.onOpen}>
-				{props.children}
-			</button>
-		)
+		return <div class="row app-grid">{apps}</div>
 	}
 }

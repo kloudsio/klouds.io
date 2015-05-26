@@ -12,6 +12,3 @@ export let user = {
     return superagent.post('/user/create').type('json').accept('json').send(data).end;
   }
 }
-//    	this.qwest.headers = {
-//			Authorization: 'Bearer ' + token
-//		};
