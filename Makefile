@@ -11,11 +11,11 @@ DUO := duo -u client/plugins.js -o build --development
 # Commands
 #
 
-all: setup bundle serve
+all: setup build serve
 
 setup: server/node_modules client/node_modules vendor
 vendor: build/browser-polyfill.min.js
-bundle: entries build/index.html
+build: entries build/index.html
 clean: clean-build clean-duo
 
 #

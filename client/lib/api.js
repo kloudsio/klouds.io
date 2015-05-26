@@ -1,20 +1,15 @@
 let superagent = require('visionmedia/superagent')
 let _ = require('lodash/lodash')
 
-function thenz(endable) { 
-  let deferred = Promise.defer();    
-  let cb = (err, data) => err !== null ? deferred.reject(err) : deferred.resolve(data)
-  endable.end(cb);
-  return deferred;
-}
-
 
 export let user = {
   login(data) {
-    return thenz(superagent.post('/user/login').accept('json').send(data));
+    return function(cb) {
+    	superagent.post('/user/login').type('json').accept('json').send(data).end(cb);
+    }
   },
   register(data) {
-    return thenz(superagent.post('/user/create').accept('json').send(data));
+    return superagent.post('/user/create').type('json').accept('json').send(data).end;
   }
 }
 //    	this.qwest.headers = {

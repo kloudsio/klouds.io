@@ -40,9 +40,10 @@ function* loadApps() {
 	yield _.mapValues(modules, function (dir, prefix) {
 		var app = koa();
 		var ctx = context(prefix);
-		_.assign(app.context, ctx);
 
 		app.use(function* (next) {
+			_.assign(this, ctx);
+
 			this.info(this.request.path);
 			yield next;
 		});

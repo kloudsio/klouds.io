@@ -3,23 +3,39 @@ import layout from './elements/layout'
 import { user } from './lib/api'
 import { transforms } from './lib/state'
 
+import co from 'tj/co';
+
 let items = require('./apps.yaml')
 
 
-function login(data) { 
-	user.login(data).then(function (res) {
-		transforms.login(res);
+function* login(data, setState) {
+	let response = yield user.login(data);
+	console.log('login response', response);
+	if (!response) {
+		return;
+	}
+	var data = response.body;
+
+	transforms.login(data);
+	
+	setState({ 
+		authed: true, 
+		text: data.token 
 	});
 }
 
-function register(data) { 
-	user.register(data).then(user.login);
+function* register(data, setState) { 
+	let response = yield user.register(data);
+	if (!response) 
+		return false;
+
+	return yield login(data, setState);
 }
 
 
 
 // ignition.
-layout(items, { login: login, register: register });
+layout(items, { login: co.wrap(login), register: co.wrap(register) });
 
 
 

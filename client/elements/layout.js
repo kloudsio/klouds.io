@@ -7,15 +7,15 @@ import { Grid, Item } from './apps.js';
 
 
 export default function (items, events) {
-	
+
 	let { login, register } = events;	
 	
-	items = items.map((x) => <Item open={x.open}>{x.name}</Item>);
+	items = items.map((item) => <Item open={item.open}>{item.name}</Item>);
 	
 	let oak = tree(
 		<Page>
 			<LogoText>Klouds.io</LogoText> <Br />
-			<Login login={login} register={register} /> <Br />
+			<Login onLogin={login} onRegister={register} /> <Br />
 			<Grid>{items}</Grid>
 		</Page>
 	)
