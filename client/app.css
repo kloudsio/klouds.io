@@ -2,7 +2,7 @@
 @import 'kristoferjoseph/flexboxgrid';
 
 :root {
-	--outlines: #2B2B2B;
+	--outlines: #353535;
 	--background: linear-gradient(#EEE, #EAEAF2);
 	--gutters: 10px;
 }

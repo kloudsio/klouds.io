@@ -11,11 +11,26 @@ let propTypes = {
 function render(component) {
 	let { props, state } = component;
 	
-	let items = _.map(props.apps, function (app) {
-		return <button class="col-xs-2 box app-item" onClick={appClicked(app)}>{app.name}</button>
+	let [appsOff, appsOn] = _.partition(props.apps, 'disabled');
+	
+	let itemsOn = _.map(appsOn, function (app) {
+		return <button class={['app-item']} onClick={appClicked(app)}>{app.name}</button>
 	});
 
-	return <div class="row app-grid">{items}</div>
+	let itemsOff = _.map(appsOff, function (app) {
+		return <div class={['upcoming-item']}>{app.name}</div>
+	});
+
+	return <div class="row">
+		<h4>Ready To Deploy</h4>
+		<div class="col-xs center-xs">
+			{itemsOn}
+		</div>
+		<h4>Upcoming</h4>
+		<div class="col-xs">
+			{itemsOff}
+		</div>
+	</div>
 }
 
 function afterRender(component, el) {

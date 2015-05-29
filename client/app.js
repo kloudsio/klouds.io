@@ -6,8 +6,9 @@ import Apps from './elements/apps'
 
 import { initApp, login, register, purchase} from './events.js'
 
+
 /*
-	The App
+	The App main 
 */
 
 let app = tree(<div />);
@@ -16,22 +17,15 @@ initApp(app);
 
 
 let nextline = () => <div class="spacer" />
-
 let structure = 
 	<div class="page">
-
 		<LogoText>Klouds.io</LogoText>
-
-		{nextline()}
-
+		{ nextline() }
 		<Login 
 			onLogin={login} 
 			onRegister={register} />
-
-		{nextline()}
-
-		<Apps 
-			onApp={purchase} />
+		{ nextline() }
+		<Apps onApp={purchase} />
 	</div>
 
 
