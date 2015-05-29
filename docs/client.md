@@ -33,7 +33,7 @@ https://babeljs.io/docs/learn-es2015/#modules
 https://github.com/tj/co -- cleaner than [promises](https://babeljs.io/docs/learn-es2015/#promises)
 
 
-A Single-Page Application should...
+### Single-Page Application
 
 - manage it's own state
 - not reload
