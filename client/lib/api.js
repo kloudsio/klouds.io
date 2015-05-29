@@ -10,7 +10,9 @@ export let user = {
   },
 
   register(data) {
-    return superagent.post('/user/create').type('json').accept('json').send(data).end;
+    return function(cb) {
+      return superagent.post('/user/create').type('json').accept('json').send(data).end(cb);
+    }
   }
 }
 

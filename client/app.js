@@ -4,16 +4,15 @@ import LogoText from './elements/logo-text'
 import Login from './elements/login'
 import Apps from './elements/apps'
 
-import Events from './events.js'
+import { initApp, login, register, purchase} from './events.js'
 
 /*
 	The App
 */
 
 let app = tree(<div />);
-app.set('apps', []);
 
-Events.initApp(app);
+initApp(app);
 
 
 let nextline = () => <div class="spacer" />
@@ -26,13 +25,13 @@ let structure =
 		{nextline()}
 
 		<Login 
-			onLogin={Events.onLogin} 
-			onRegister={Events.onRegister} />
+			onLogin={login} 
+			onRegister={register} />
 
 		{nextline()}
 
 		<Apps 
-			onApp={Events.onApp} />
+			onApp={purchase} />
 	</div>
 
 

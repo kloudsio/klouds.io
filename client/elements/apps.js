@@ -11,7 +11,7 @@ let propTypes = {
 function render(component) {
 	let { props, state } = component;
 	
-	let items = props.apps.map(function (app) {
+	let items = _.map(props.apps, function (app) {
 		return <button class="col-xs-2 box app-item" onClick={appClicked(app)}>{app.name}</button>
 	});
 
