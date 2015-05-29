@@ -3,6 +3,12 @@
 
 The Front-End Client is a **Single-Page Application**.
 
+### Technology Crash Course
+
+1. Babeljs: Learn the ES6 Javascript Syntax. [ES6 Playground](https://babeljs.io/repl/)
+
+2. Deku: Front End Components. [Add a component to Klouds](https://github.com/metadevfoundation/microgrid/tree/master/client/elements) - [Docs](https://github.com/dekujs/deku)
+
 A Single-Page Application should...
 
 - manage it's own state
