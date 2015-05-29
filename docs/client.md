@@ -9,6 +9,29 @@ The Front-End Client is a **Single-Page Application**.
 
 2. Deku: Front End Components. [Add a component to Klouds](https://github.com/metadevfoundation/microgrid/tree/master/client/elements) - [Docs](https://github.com/dekujs/deku)
 
+/client/app.js is the start of the front-end code
+
+### A Legend of Syntax wtfx
+
+<Page>...</Page> inside JS
+https://github.com/dekujs/deku
+
+(x) => x * 5
+https://babeljs.io/docs/learn-es2015/#arrows
+
+{ state, props } = component;
+https://babeljs.io/docs/learn-es2015/#destructuring
+
+'let' is the same as 'var'
+
+import / export
+https://babeljs.io/docs/learn-es2015/#modules
+
+yield / function*
+https://github.com/tj/co
+which is a nicer way to acheive this: https://babeljs.io/docs/learn-es2015/#promises
+
+
 A Single-Page Application should...
 
 - manage it's own state
