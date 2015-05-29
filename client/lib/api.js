@@ -8,7 +8,16 @@ export let user = {
     	superagent.post('/user/login').type('json').accept('json').send(data).end(cb);
     }
   },
+
   register(data) {
     return superagent.post('/user/create').type('json').accept('json').send(data).end;
   }
+}
+
+export let apps = {
+	get() {		
+    return function(cb) {
+	    return superagent.get('/apps').type('json').accept('json').end(cb);
+    }
+	}
 }

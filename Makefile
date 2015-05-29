@@ -79,5 +79,5 @@ clean-duo:
 	@rm -rf ./components
 
 .PHONY: all install bundle
-.PHONY: watch nodemon develop
+.PHONY: watch nodemon develop seed
 .PHONY: clean clean-build clean-npm clean-duo

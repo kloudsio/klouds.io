@@ -8,8 +8,9 @@ var config = {
 	port: 5080,
 
 	modules: {
-		'/user': './user',
-		'/payment': './payment',
+		'/apps': './apps',
+		'/user': './users',
+		'/payment': './payments',
 	},
 
 	assets: {
