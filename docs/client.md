@@ -13,23 +13,24 @@ The Front-End Client is a **Single-Page Application**.
 
 ### A Legend of Syntax wtfx
 
-<Page>...</Page> inside JS
+``<Page>...</Page>`` inside JS
 https://github.com/dekujs/deku
 
-(x) => x * 5
+``(x) => x * 5``
 https://babeljs.io/docs/learn-es2015/#arrows
 
-{ state, props } = component;
+``'let' is the same as 'var'``
+
+``let { state, props } = component;``
 https://babeljs.io/docs/learn-es2015/#destructuring
 
-'let' is the same as 'var'
 
-import / export
+
+``import`` and ``export``
 https://babeljs.io/docs/learn-es2015/#modules
 
-yield / function*
-https://github.com/tj/co
-which is a nicer way to acheive this: https://babeljs.io/docs/learn-es2015/#promises
+``yield`` and ``function* ()``
+https://github.com/tj/co -- cleaner than [promises](https://babeljs.io/docs/learn-es2015/#promises)
 
 
 A Single-Page Application should...
