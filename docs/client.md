@@ -38,8 +38,12 @@ No reloading, No changing pages.
 
 The app logic is separated as such.
 
-``/app.js`` creates some ``/elements/*.js``
+``/app.js`` creates some ``/elements``
+
+``/app.js`` sets some global states ``app.set(/* tree */)``
+
 ``/app.js`` imports some ``/events.js`` to react to ``/elements/*.js`` events.
+
 ``/events.js`` makes some calls to ``/lib/api.js``, the lib that talks to the server.
 
-``/app.js`` also sets some data using ``app.set(/* tree */)``
+``/app.js`` renders it into the page.
