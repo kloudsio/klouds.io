@@ -1,7 +1,7 @@
 # Front-End Client
 
 
-The Front-End Client is a **Single-Page Application**.
+The Front-End Client is a **Single-Page Application**. written in awesome ES6 Javascript with Babeljs. Written with the spiffiest of web components, using Deku.
 
 ### Technology Crash Course
 
@@ -9,7 +9,6 @@ The Front-End Client is a **Single-Page Application**.
 
 2. Deku: Front End Components. [Add a component to Klouds](https://github.com/metadevfoundation/microgrid/tree/master/client/elements) - [Docs](https://github.com/dekujs/deku)
 
-/client/app.js is the start of the front-end code
 
 ### A Legend of Syntax wtfx
 
