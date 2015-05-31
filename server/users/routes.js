@@ -1,6 +1,8 @@
 var jwt = require('koa-jwt');
 var pswd = require('pswd')();
 var Joi = require('joi');
+var config = require('../config.js');
+
 
 module.exports.login = {
   method: 'post',
@@ -21,7 +23,7 @@ module.exports.login = {
     if (user) {
       var match = yield pswd.compare(params.password, user.password);
       if (match) {
-        var token = jwt.sign(user, this.config('jwt').secret, {
+        var token = jwt.sign(user, config('jwt').secret, {
           expiresInMinutes: 60 * 5
         });
 				delete user.password;

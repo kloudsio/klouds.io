@@ -1,10 +1,10 @@
 var unheart_nodejs = "One must run me with io.js! ${'<3'}";
 
-var main = require('./lib/main');
-var config = require('./config');
+var main = require('./lib/main'),
 
 
-var run = main.start(config)
-	.catch(function fatal(e) {
-		console.error(e.stack);
-	});
+	apps = require('./apps'),
+	users = require('./users'),
+	payments = require('./payments')
+
+main.listen();

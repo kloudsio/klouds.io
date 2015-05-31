@@ -4,7 +4,7 @@
 
 NODE := iojs
 NODE_ENV ?= development
-DUO := duo -u client/plugins.js -o build --development
+DUO := duo -u ../client/plugins.js -o build --development
 
 
 #
@@ -19,7 +19,9 @@ develop:
 
 
 install: server/node_modules client/node_modules build/browser-polyfill.min.js
+
 build: build/index.html bundle
+
 clean: clean-build clean-duo
 
 
@@ -40,10 +42,14 @@ build/browser-polyfill.min.js: client/node_modules/duo-babel/node_modules/babel-
 #
 
 bundle:
-	@$(DUO) client/app.css client/app.js
-		
+	@$(DUO) client/styles/app.css client/lib/app.js
+
 watch:
-	@sane '$(DUO) client/app.css client/app.js' client --glob='**/*'
+	@sane \
+		' cp -u client/index.html build/index.html; \
+		  $(DUO) client/styles/app.css --stdout > build/app.css; \
+		  $(DUO) client/lib/app.js --stdout  > build/app.js;' \
+		  client --glob='**/*'
 
 
 #

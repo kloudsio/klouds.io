@@ -7,15 +7,7 @@ var config = {
 	db: 'localhost/test',
 	port: 5080,
 
-	modules: {
-		'/apps': './apps',
-		'/user': './users',
-		'/payment': './payments',
-	},
-
-	assets: {
-		'/': pathJoin(__dirname, '../build')
-	},
+	assets: pathJoin(__dirname, '../build'),
 
 	jwt: {
 		secret: secrets.jwt

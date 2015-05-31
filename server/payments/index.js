@@ -1,24 +1,28 @@
+
 var _ = require('lodash');
-var router = require('koa-joi-router');
 
-var costripe = require('./co-stripe');
-var plans = require('./plans');
-var routes = require('./routes');
+var route = require('koa-route');
 
-module.exports = function* (app, ctx) {
+var main = require('../lib/main.js');
+var config = require('../config.js');
 
-  costripe(ctx.config('stripe_sk'));
+var stripe = require('stripe')(config('stripe_sk'));
 
-  if (ctx.config('stripe_sync')) {
-    ctx.info('syncing stripe...');
-    yield plans.sync;
-    ctx.info('stripe sync complete.');
-  }
 
-  // KOA
-  var payments = router();
-  app.use(payments.middleware());
+function* purchase() {
+    var stripeToken = this.body.stripeToken;
 
-  // Routes
-  payments.post('/subscribe', routes.createSubscription);
+    stripe.customers.create({
+      source: stripeToken,
+      plan: "3",
+      email: "payinguser@example.com"
+    }, function(err, customer) {
+
+    })
 }
+
+var app = main.create('Payments');
+
+app.use(route.post('/', purchase));
+
+main.mount('/payment', app);

@@ -3,7 +3,7 @@ var _ = require('lodash');
 /**
  * Logging methods.
  */
-function logma(prefix) {
+function logger(prefix) {
   prefix = '\x1b[0m\x1b[33m' + _.padLeft(prefix.toLowerCase(), 14);
   var loggage = {
     warn: '\x1b[35m\x1b[36m\x1b[2m :',
@@ -19,5 +19,5 @@ function logma(prefix) {
 
 
 module.exports = {
-  logma: logma,
+  logger: logger,
 };

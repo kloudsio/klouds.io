@@ -22,8 +22,22 @@ export default {
   render(component) {
     let { props, state } = component;
 
+    function checkwin(e) {
+      if (e.target.value.toLowerCase() == "loud") {
+        document.body.style.transform = "rotate(9deg)";
+      } else {
+        document.body.style.transform = "";
+      }
+    }
 
-    return (      
+    if (state.authed) {
+      return (<div>
+        Humbly Presenting...
+        K<input onKeyUp={checkwin} style="padding: none; border-top: none; border-left: none; border-right: none; width:4em" type='text' / >s.io!
+      </div>)
+    }
+
+    return (
       <form class="login">
       	<input type="email" placeholder="email" />
   			<input type="password" placeholder="password" />
@@ -34,17 +48,17 @@ export default {
       </form>
     );
   },
-  
+
   afterRender(component, el) {
     let { props, state } = component;
-    
+
 
     component.data = function() {
       let email = el.querySelector('input[type=email]');
       let password = el.querySelector('input[type=password]');
 
       return {
-        email: email.value, 
+        email: email.value,
         password: password.value
       };
     }

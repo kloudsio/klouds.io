@@ -1,6 +1,7 @@
 
 body {
   width: 100%;
+  height: 100%;
   position: relative;
 }
 
@@ -15,9 +16,9 @@ body {
 }
 
 .spacer {
-  display: block;  
+  display: block;
   width: 100%;
-  height: 4em;
+  height: 1em;
 }
 
 .app-grid {
@@ -25,10 +26,10 @@ body {
 }
 
 .app-item {
-  display: block;  
+  display: block;
   margin-bottom: 1em;
   padding: 1rem 6rem;
-  line-height: 2rem;  
+  line-height: 2rem;
   border: 1px solid var(--outlines);
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 1px 1px 2px black;
@@ -46,7 +47,9 @@ body {
 
 .logo {
   height: 48px;
+  margin-bottom: 1em;
 }
 
 .login {
+
 }

@@ -2,6 +2,12 @@ import { element } from 'segmentio/deku';
 let _ = require('lodash/lodash');
 
 
+function itemClick(app) {
+	return function (e, component, setState) {		
+		component.props.onOpen(app, component, setState);
+	}
+}
+
 let propTypes = {
 	apps: {
 		source: 'apps'
@@ -14,7 +20,7 @@ function render(component) {
 	let [appsOff, appsOn] = _.partition(props.apps, 'disabled');
 	
 	let itemsOn = _.map(appsOn, function (app) {
-		return <button class={['app-item']} onClick={appClicked(app)}>{app.name}</button>
+		return <button class={['app-item']} onClick={itemClick(app)}>{app.name}</button>
 	});
 
 	let itemsOff = _.map(appsOff, function (app) {
@@ -38,11 +44,5 @@ function afterRender(component, el) {
 }
 
 
-function appClicked(app) {
-	return function buttonClicked(e, component, setState) {
-		e.preventDefault();
-		props.appClicked(app, component, setState);
-	}
-}
 
 export default { propTypes, render, afterRender };

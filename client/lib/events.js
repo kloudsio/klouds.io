@@ -1,7 +1,7 @@
 
-import co from 'tj/co'
-import { apps, user } from './lib/api'
-import { transforms } from './lib/state'
+import co from 'tj/co';
+import { apps, user } from './api';
+import { transforms } from './state';
 
 
 function* initApp(app) {
@@ -18,7 +18,7 @@ function* initApp(app) {
 
 
 function* login(data, setState) {
-	let response = yield user.login(data);	
+	let response = yield user.login(data);
 
 	if (!response) {
 		return;
@@ -26,10 +26,10 @@ function* login(data, setState) {
 
 	var data = response.body;
 	transforms.login(data);
-	
-	setState({ 
-		authed: true, 
-		text: data.token 
+
+	setState({
+		authed: true,
+		text: data.token
 	});
 }
 
@@ -38,10 +38,17 @@ function* register(data, setState) {
 }
 
 /*
+	Enter Credit Card #
+*/
+function* billing(app) {
+
+}
+
+/*
 	Pay for App
 */
 function* purchase(app) {
-	console.dir(app);
+
 }
 
 
@@ -49,5 +56,6 @@ export default {
 	initApp: co.wrap(initApp),
 	login: co.wrap(login),
 	register: co.wrap(register),
+	billing: co.wrap(billing),
 	purchase: co.wrap(purchase),
 };

@@ -1,17 +1,31 @@
-var _ = require('lodash');
-var jrouter = require('koa-joi-router')
 
+var main = require('../lib/main.js');
+var config = require('../config.js');
 
-var userStore = require('./user-db');
-var routes = require('./routes');
+/*
+  DB
+*/
+var monk = require('monk');
+var wrap = require('co-monk');
 
-
-
-module.exports = function* (app, context) {
-	app.use(userStore);
-
-	var router = jrouter();
-	router.route(routes.create);
-	router.route(routes.login);
-	app.use(router.middleware());
+function* userStore(next) {
+  this.db = monk(config('db'));
+  this.users = wrap(this.db.get('users'));
+  yield next;
 }
+
+/*
+  Route
+*/
+var routes = require('./routes');
+var router = require('koa-joi-router')();
+router.route(routes.create);
+router.route(routes.login);
+
+/*
+  App
+*/
+var app = main.create('Users');
+app.use(userStore);
+app.use(router.middleware());
+main.mount('/user', app);

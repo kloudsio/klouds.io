@@ -8,11 +8,6 @@
   Thou shalt follow your heart: #000000 >= heart >= #FFFFFF
 */
 
-/*:root {
-	--outlines: #A2D2E6;
-	--background: linear-gradient(#333639, #393531);
-}*/
-
 body {
 	color: var(--outlines);
 	background: var(--background);

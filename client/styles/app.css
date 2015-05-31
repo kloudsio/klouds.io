@@ -2,9 +2,9 @@
 @import 'kristoferjoseph/flexboxgrid';
 
 :root {
-	--outlines: #353535;
-	--background: linear-gradient(#EEE, #EAEAF2);
 	--gutters: 10px;
+	--outlines: #A2D2E6;
+	--background: linear-gradient(#333639, #393531);
 }
 
 
@@ -19,5 +19,5 @@
 }
 
 
-@import './styles/paint.css';
-@import './styles/layout.css';
+@import './paint.css';
+@import './layout.css';
