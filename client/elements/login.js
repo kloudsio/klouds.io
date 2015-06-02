@@ -15,11 +15,12 @@ export default {
   initialState() {
     return {
       authed: false,
-      text: ''
+      text: '',
+      open: true,
     }
   },
 
-  render(component) {
+  render(component, setState) {
     let { props, state } = component;
 
     function checkwin(e) {
@@ -30,22 +31,39 @@ export default {
       }
     }
 
+    function open() {
+      setState({ open: true });
+    }
+
+    function close() {
+      setState({ open: false });
+    }
+
     if (state.authed) {
-      return (<div>
+      return (<div class="welcome">
         Humbly Presenting...
         K<input onKeyUp={checkwin} style="padding: none; border-top: none; border-left: none; border-right: none; width:4em" type='text' / >s.io!
       </div>)
     }
 
+    if (!state.open) {
+      return (<div class="welcome"><button onClick={open}>Login</button></div>);
+    }
     return (
-      <form class="login">
-      	<input type="email" placeholder="email" />
-  			<input type="password" placeholder="password" />
-  			<button onClick={login}>Login</button>
-        <button onClick={register}>Register</button>
-        { state.authed ? "You are Logged In" : "" }
-        { state.text }
-      </form>
+      <div class="backdrop">
+        <form class="login modal">
+          <span class="close" onClick={close}>x</span>
+          <span class="title">Step #1</span>
+          <label>Email</label>
+        	<input name="email" type="email" placeholder="email" />
+    			<label>Password</label>
+          <input name="password" type="password" placeholder="password" />
+    			<button onClick={login}>Login</button>
+          <button class="secondary" onClick={register}>Register</button>
+          { state.authed ? "You are Logged In" : "" }
+          { state.text }
+        </form>
+      </div>
     );
   },
 

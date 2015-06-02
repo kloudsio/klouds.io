@@ -11,9 +11,18 @@ let _ = require('lodash/lodash')
     return function (cb) { ... }  
   }
 */
+let authed = function() {};
 
+export let auth = function (token) {
+  console.log('Setting Auth Header', token);
+  authed = function(request) { 
+    request.set('Authorization', `Bearer ${token}`); 
+    return request;
+  }
+}
 
 export let user = {
+  
   login(data) {
     return function(cb) {
     	superagent.post('/user/login').type('json').accept('json').send(data).end(cb);
@@ -33,9 +42,9 @@ export let apps = {
 	    return superagent.get('/apps').type('json').accept('json').end(cb);
     }
 	},
-  purchase() {
+  purchase(data) {
     return function(cb) {
-      return superagent.get('/apps').type('json').accept('json').end(cb);
+      return authed(superagent.post('/payment')).type('json').accept('json').send(data).end(cb);
     }    
   }
 }

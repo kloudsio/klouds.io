@@ -28,12 +28,20 @@ body {
 }
 
 input, button {
+	background: rgba(255, 255, 255, 0.03);
  	font-variant: all-small-caps;
-	background: none;
-	border: 1px solid var(--outlines);
 	color: var(--outlines);
 }
 
+input {
+	border: 1px solid var(--outlines);
+}
+
+button {
+  border: none;
+  box-shadow: 1px 1px 1px var(--primary-shadow);
+
+}
 
 .login input {
   font-variant: all-small-caps;

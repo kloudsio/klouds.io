@@ -1,17 +1,108 @@
 
 body {
-  width: 100%;
-  height: 100%;
   position: relative;
 }
 
-.page {
-  left: 50%;
+.logo {
+  display: inline-block;
+  height: 48px;
+  margin-bottom: 1em;
+}
+
+.welcome {
+  margin-bottom: 1em;
+  line-height: 34px;
+}
+
+.welcome > * {
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right:0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background: var(--modal-backdrop);
+}
+
+.modal {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 2;
+}
+
+.modal {
+  background: var(--modal-background);
+  border: 1px solid var(--modal-border);
+  padding: 3em 2em 1em 2em;
+}
+.modal .title {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /*height: m;*/
+  border-bottom:  1px solid var(--modal-border);
+  font-size: 1.1rem;
+  padding: 0.5em 1em 0.5em 1em;
+}
+.modal::after ::hover{
+  text-shadow: white;
+}
+.modal .close {
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  padding: 0.5em;
+  content: 'x';
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+}
+
+.modal .info {
+  font-size: 0.9rem;
+  display: block;
+}
+
+.modal label {
+  display: inline-block;
+  font-weight: normal;
+  margin: 0.5em 0 0 0;
+  font-size: 0.9rem;
+}
+
+.modal input {
+  padding: 0.5em 1em;
+  margin: 0.5em 0 0.5em 0;
+  display: block;
+  width: 15em;
+  line-height: 1em;
+}
+
+.modal button {
+  margin: 0.5em 0 0 0.5em;
+  line-height: 2em;
+  float: right;
+}
+
+input.secondary, button.secondary {
+  box-shadow: 1px 1px 1px 1px #0C0C0C;
+}
+
+.modal input.expiry {
+  display: inline-block;
+  width: 4em;
+}
+
+.page {
   margin: 0 auto 0 auto;
   max-width: 1200px;
 
-  transform: translate3d(-50%, 0, 0);
   box-sizing: border-box;
 }
 
@@ -30,9 +121,8 @@ body {
   margin-bottom: 1em;
   padding: 1rem 6rem;
   line-height: 2rem;
-  border: 1px solid var(--outlines);
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 1px 1px 2px black;
+  box-shadow: 1px 1px 1px var(--primary-shadow);
 }
 
 .upcoming-item {
@@ -40,16 +130,16 @@ body {
   padding: 1rem;
   line-height: 1rem;
   text-align: center;
-  border: 1px solid var(--outlines);
+
   margin: 0 auto 1rem;
   opacity: 0.7;
+  box-shadow: 1px 1px 1px var(--primary-shadow);
 }
 
-.logo {
-  height: 48px;
-  margin-bottom: 1em;
-}
 
-.login {
 
+/* stripe stuff */
+button.stripe-busy {
+  pointer-events: none;
+  cursor: not-allowed;
 }

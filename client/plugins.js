@@ -3,12 +3,10 @@
  */
 
 var babel = require('duo-babel')
-var yaml = require('duo-yaml');
 var myth = require('duo-myth');
 
 var plugins = [
   babel({ onlyLocals: true }),
-  yaml(),
   myth(),
 ];
 

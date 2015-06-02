@@ -1,6 +1,6 @@
 
 import co from 'tj/co';
-import { apps, user } from './api';
+import { apps, user, auth } from './api';
 import { transforms } from './state';
 
 
@@ -26,7 +26,7 @@ function* login(data, setState) {
 
 	var data = response.body;
 	transforms.login(data);
-
+	auth(data.token);
 	setState({
 		authed: true,
 		text: data.token
@@ -47,8 +47,11 @@ function* billing(app) {
 /*
 	Pay for App
 */
-function* purchase(app) {
-
+function* purchase(app, token) {
+	yield apps.purchase({ 
+		app: app, 
+		tok: token 
+	});	
 }
 
 

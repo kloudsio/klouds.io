@@ -3,17 +3,22 @@ import { tree, render, element } from 'segmentio/deku'
 import LogoText from '../elements/logo-text'
 import Login from '../elements/login'
 import Apps from '../elements/apps'
+import Stripe from '../elements/stripe'
 
+import Config from '../config'
+console.log(Config);
 import { initApp, login, register, purchase} from './events'
 
-
-function* reveal(item) {
+// Reveal
+function reveal(item) {
+	console.log(item);
 	let options = {
-		name: item.name,
-	    description: `Recurring Monthly Subscription to ${item.name}`,
-        amount: 10.00
-	}
-	app.set('showStripe', item);
+		item: item,
+	  description: `Recurring Monthly Subscription to ${item.name}`,
+    amount: 10.00
+	};
+	app.set('stripe_pk', Config.stripe_pk);
+	app.set('showStripe', options);
 }
 
 /*
@@ -28,15 +33,15 @@ initApp(app);
 let nextline = () => <div class="spacer" />
 
 let structure = (
-	<div class="page">
-		<LogoText>Klouds.io</LogoText>
-
-		<Login
-			onLogin={login}
-			onRegister={register} />
-		{ nextline() }
-		<Apps onOpen={reveal} />
-	</div>
+	<app>
+		<div class="page">
+			<LogoText>Klouds.io</LogoText>	
+			<Login onLogin={login} onRegister={register} />
+			
+			<Apps onOpen={reveal} />
+			<Stripe onToken={purchase} />
+		</div>
+	</app>
 );
 
 app.mount(structure);

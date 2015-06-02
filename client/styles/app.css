@@ -5,6 +5,10 @@
 	--gutters: 10px;
 	--outlines: #A2D2E6;
 	--background: linear-gradient(#333639, #393531);
+	--modal-backdrop: rgba(0, 0, 0, 0.3);
+	--modal-background: linear-gradient(#232629, #292521);
+	--modal-border: #677981;
+	--primary-shadow: black;
 }
 
 

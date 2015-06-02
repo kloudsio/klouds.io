@@ -28,7 +28,7 @@ function render(component) {
 	});
 
 	return <div class="row">
-		<h4>Ready To Deploy</h4>
+		<h4>Host me a...</h4>
 		<div class="col-xs center-xs">
 			{itemsOn}
 		</div>
