@@ -1,7 +1,7 @@
-[![Stories in Ready](https://badge.waffle.io/metadevfoundation/microgrid.svg?label=ready&title=Ready)](http://waffle.io/metadevfoundation/microgrid)
+[![Stories in Ready](https://badge.waffle.io/metadevfoundation/klouds.io.svg?label=ready&title=Ready)](http://waffle.io/metadevfoundation/klouds.io)
 
 
-# microgrid
+# Klouds.io
 Application Deployage as a Service... as a Service!?
 
 
@@ -13,7 +13,7 @@ Install Steps
 
 
 ```bash
-git clone https://github.com/metadevfoundation/microgrid
+git clone https://github.com/metadevfoundation/klouds.io
 npm install -g duo sane
 ```
 
