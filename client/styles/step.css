@@ -1,0 +1,49 @@
+
+.step {
+  background: var(--step-background);
+  border: 1px solid var(--step-border);
+}
+
+.step i.num {
+  font-size: 64px;
+}
+
+.step .title {
+  font-size: 1.1rem;
+}
+
+.step::after ::hover{
+  text-shadow: white;
+}
+
+.step .info {
+  font-size: 0.9rem;
+  display: block;
+}
+
+.step label {
+  display: inline-block;
+  font-weight: normal;
+  margin: 0.5em 0 0 0;
+  font-size: 0.9rem;
+}
+
+.step input {
+  padding: 0.5em 1em;
+  margin: 0.5em 0 0.5em 0;
+  display: block;
+  width: 15em;
+  line-height: 1em;
+}
+
+.step input.expiry {
+  display: inline-block;
+  width: 4em;
+}
+
+ .step button {
+  margin: 0.5em 0 0.5em 0;
+  line-height: 1em;
+  width: 7.5em;
+  padding: 0.5em 1em;
+ }

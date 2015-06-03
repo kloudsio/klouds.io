@@ -6,8 +6,8 @@ var babel = require('duo-babel')
 var myth = require('duo-myth');
 
 var plugins = [
-  babel({ onlyLocals: true }),
   myth(),
+  babel({ onlyLocals: true }),
 ];
 
 module.exports = plugins;

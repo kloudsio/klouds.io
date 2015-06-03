@@ -26,25 +26,3 @@ body {
 	stroke-dashoffset: 0;
 	stroke-dasharray: 0 1200 0;
 }
-
-input, button {
-	background: rgba(255, 255, 255, 0.03);
- 	font-variant: all-small-caps;
-	color: var(--outlines);
-}
-
-input {
-	border: 1px solid var(--outlines);
-}
-
-button {
-  border: none;
-  box-shadow: 1px 1px 1px var(--primary-shadow);
-
-}
-
-.login input {
-  font-variant: all-small-caps;
-  background: none;
-  border: 1px solid
-}
