@@ -23,7 +23,7 @@ module.exports.login = {
     if (user) {
       var match = yield pswd.compare(params.password, user.password);
       if (match) {
-        var token = jwt.sign(user, config('jwt').secret, {
+        var token = jwt.sign(user, config('jwt_key'), {
           expiresInMinutes: 60 * 5
         });
 				delete user.password;
@@ -76,33 +76,3 @@ module.exports.create = {
     this.body = user;
   }
 }
-
-
-
-// EXAMPLE CO-MONK
-// yield users.remove({});
-//
-// yield users.insert({ name: 'Tobi', species: 'ferret' });
-// yield users.insert({ name: 'Loki', species: 'ferret' });
-// yield users.insert({ name: 'Jane', species: 'ferret' });
-//
-// var res = yield users.findOne({ name: 'Tobi' });
-// res.name.should.equal('Tobi');
-//
-// var res = yield users.find({ species: 'ferret' });
-// res.should.have.length(3);
-// Parallel inserts:
-//
-// yield users.remove({});
-//
-// yield [
-//   users.insert({ name: 'Tobi', species: 'ferret' }),
-//   users.insert({ name: 'Loki', species: 'ferret' }),
-//   users.insert({ name: 'Jane', species: 'ferret' })
-// ];
-//
-// var res = yield users.findOne({ name: 'Tobi' });
-// res.name.should.equal('Tobi');
-//
-// var res = yield users.find({ species: 'ferret' });
-// res.should.have.length(3);

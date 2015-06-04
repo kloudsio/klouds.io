@@ -5,8 +5,6 @@ import Login from '../elements/login'
 import Apps from '../elements/apps'
 import Stripe from '../elements/stripe'
 
-import Config from '../config'
-console.log(Config);
 import { initApp, login, register, purchase} from './events'
 
 // Reveal
@@ -17,7 +15,7 @@ function reveal(item) {
 	  description: `Recurring Monthly Subscription to ${item.name}`,
     amount: 10.00
 	};
-	app.set('stripe_pk', Config.stripe_pk);
+	app.set('stripe_pk', process.env.STRIPE_PK);
 	app.set('showStripe', options);
 }
 

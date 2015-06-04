@@ -13,7 +13,7 @@ var monk = require('monk');
 var wrap = require('co-monk');
 
 function* appStore(next) {
-  this.db = monk(config('db'));
+  this.db = monk(process.env.MONGODB);
   this.apps = wrap(this.db.get('apps'));
   yield next;
 }

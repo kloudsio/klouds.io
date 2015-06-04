@@ -1,13 +1,7 @@
-*/config.js
 build
 
-server/node_modules
-server/secrets.js
-
-client/node_modules
+*/node_modules
 components
 
 deploy.Makefile
-journal.html
-journal.json
 .settings

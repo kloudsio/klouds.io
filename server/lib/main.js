@@ -7,7 +7,7 @@ var serve = require('koa-static');
 var mount = require('koa-mount');
 
 var util = require('./util');
-var config = require('../config');
+var config = require('../config.js');
 
 /*
 	Main App
@@ -36,13 +36,14 @@ app.use(function *(next) {
 	Serves Client
 */
 
-var assets = config('assets');
+var assets = process.env.ASSETS;
+
 if (assets) {
 	log(`serving static files at ${assets}`);
 	app.use(serve(assets, { defer: true } ));
 }
 
-module.exports.create = function(name) {
+module.exports.create = function (name) {
 	log(`Creating Module ${name}`);
 
 	var sub = koa();
@@ -59,14 +60,14 @@ module.exports.create = function(name) {
 	return sub;
 }
 
-module.exports.mount = function(location, sub) {
+module.exports.mount = function (location, sub) {
 	log(`Mounted ${location}`);
 
 	app.use(mount(location, sub));
 }
 
-module.exports.listen = function() {
-	var port = config('port');
+module.exports.listen = function () {
+	var port = process.env.PORT;
 	app.listen(port);
 }
 

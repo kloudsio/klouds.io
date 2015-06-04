@@ -9,7 +9,7 @@ var monk = require('monk');
 var wrap = require('co-monk');
 
 function* userStore(next) {
-  this.db = monk(config('db'));
+  this.db = monk(config('mongodb'));
   this.users = wrap(this.db.get('users'));
   yield next;
 }

@@ -2,9 +2,22 @@
 # Environment.
 #
 
+export PORT=8080
+export MONGODB=localhost/test
+export ASSETS=/code/klouds.io/build
+export JWT_KEY=klouds-on-fire
+export STRIPE_SK=sk_test_Z34c2IRtyypD4EIQjdowKeLd
+export STRIPE_PK=pk_test_yUmttmGoJunk3wEloYLdrO2V
+
 NODE := iojs
 NODE_ENV ?= development
-DUO := duo -u ../client/plugins.js -o build --development
+DUO := duo -u ../client/plugins.js -o build
+
+
+#
+# ENV VARS
+#
+
 
 
 #
@@ -45,7 +58,6 @@ bundle:
 	@$(DUO) client/styles/app.css client/lib/app.js
 
 watch:
-	@ [ -f "client/config.js" ] || { echo "ERROR: Missing client/config.js"; exit 1; }
 	@sane \
 		' cp -u client/index.html build/index.html; \
 		  $(DUO) client/styles/app.css --stdout > build/app.css; \
@@ -65,8 +77,12 @@ build/index.html: client/index.html
 # Dev Server
 #
 
+serve:
+	@iojs server/index.js
+
 nodemon:
 	@sane 'iojs server/index.js' server --glob='**/*'
+
 
 
 #
