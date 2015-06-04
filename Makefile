@@ -45,6 +45,7 @@ bundle:
 	@$(DUO) client/styles/app.css client/lib/app.js
 
 watch:
+	@ [ -f "client/config.js" ] || { echo "ERROR: Missing client/config.js"; exit 1; }
 	@sane \
 		' cp -u client/index.html build/index.html; \
 		  $(DUO) client/styles/app.css --stdout > build/app.css; \
