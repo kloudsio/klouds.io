@@ -35,9 +35,8 @@ let nextline = () => <div class="spacer" />
 let structure = (
 	<app>
 		<div class="page">
-			<LogoText>Klouds.io</LogoText>	
+			<LogoText>Klouds.io</LogoText>
 			<Login onLogin={login} onRegister={register} />
-			
 			<Apps onOpen={reveal} />
 			<Stripe onToken={purchase} />
 		</div>

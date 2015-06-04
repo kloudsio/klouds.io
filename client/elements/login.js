@@ -50,20 +50,27 @@ export default {
       return (<div class="welcome"><button onClick={open}>Login</button></div>);
     }
     return (
-      <div class="backdrop">
-        <form class="login modal">
-          <span class="close" onClick={close}>x</span>
-          <span class="title">Step #1</span>
-          <label>Email</label>
-        	<input name="email" type="email" placeholder="email" />
-    			<label>Password</label>
-          <input name="password" type="password" placeholder="password" />
-    			<button onClick={login}>Login</button>
-          <button class="secondary" onClick={register}>Register</button>
-          { state.authed ? "You are Logged In" : "" }
-          { state.text }
-        </form>
-      </div>
+
+      <form class="login step">
+        <div class="row middle-xs">
+          <div class="col-xs-2 center-xs">
+            <i class="num">1</i>
+          </div>
+          <div class="col-xs-10">
+            <h1>Create Your Login</h1>
+            <label>Email</label>
+          	<input name="email" type="email" placeholder="email" />
+      			<label>Password</label>
+            <input name="password" type="password" placeholder="password" />
+            <div>
+        			<button onClick={login}>Login</button>
+              <button onClick={register}>Register</button>
+              { state.authed ? "You are Logged In" : "" }
+              { state.text }
+            </div>
+          </div>
+        </div>
+      </form>
     );
   },
 
