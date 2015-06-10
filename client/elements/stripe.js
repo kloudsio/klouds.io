@@ -1,87 +1,97 @@
 import { element } from 'segmentio/deku';
-let aload = require('pazguille/aload');
 
-let stripe = null;
-let token = null;
+const name = 'stripe';
 
-
-
-export default {
-    propTypes: {
-      stripe_pk: {
-        source: 'stripe_pk'
-      },
-      options: {
-          source: 'showStripe'
-      }
-    },
-    render(component, setState) {
-      let { props, state } = component;
-
-      let stripeResponseHandler = function (status, response) {
-        if (response.error) {
-          setState( {errors: response.error.message, busy: false } );
-        } else if (status != 200) {
-          setState( {errors: 'Network Error', busy: false } );
-        } else {
-          var token = response.id;
-          console.log(props.options);
-          setState({ busy: false });
-          props.onToken(props.options.item._id, token);
-        }
-      }
-
-      let processCard = function(event) {
-        setState({busy: true});
-
-        let data = {
-          number: document.getElementById('card-number').value,
-          cvc: document.getElementById('card-cvc').value,
-          exp_month: document.getElementById('card-expiry-month').value,
-          exp_year: document.getElementById('card-expiry-year').value
-        };
-
-        Stripe.card.createToken(data, stripeResponseHandler);
-      }
-
-      if (!props.options) {
-        return <div></div>;
-      }
-
-      let rickRoll = function() {
-        setTimeout(function() {
-          window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-        }, 2000);
-        setTimeout(function() {
-          alert('<3 *waves goodbye*');
-        }, 1000);
-        alert('Have fun :)');
-      }
-
-      var buttonClass = { 'stripe-busy': state.busy };
-      return (
-        <div class="backdrop">
-          <form class="stripe-form modal" method="POST" id="payment-form">
-            <span class="title">{props.options.item.name}</span>
-            <span class="info">{`\$${props.options.amount} / Month App Deployment`}</span>
-            <span class="stripe-errors">{state.errors}</span>
-
-            <label>{"Card Number"}</label>
-            <input placeholder="credit card #" type="text" size="20" id="card-number" />
-
-            <label>CVC</label>
-            <input placeholder="" type="text" size="4" id="card-cvc"/>
-
-            <label>Expiration (MM/YYYY)</label>
-            <div>
-              <input placeholder="MM" class="expiry" type="text" size="2" id="card-expiry-month"/>
-              <span>/</span>
-              <input placeholder="YYYY" class="expiry" type="text" size="4" id="card-expiry-year"/>
-             </div>
-             <button class={buttonClass} onClick={processCard}  type="button">{`Get Your App!`}</button>
-             <button class={buttonClass} style="color: grey" onClick={rickRoll} type="button">Get Rick Rolled</button>
-          </form>
-        </div>
-        );
-    }
+const propTypes = {
+  stripe_pk: {
+    source: 'stripe_pk'
+  },
+  payment: {
+      source: 'payment'
+  }
 }
+
+function initialState(props) {
+  return {    
+    busy: false,
+    error: ""
+  }
+}
+
+
+function stripeToken(data) {  
+  let deferred = new Promise.defer();
+
+  Stripe.card.createToken(data, function (status, res) {
+    if (res.error || status < 200 || status > 300 )
+      return deferred.reject(res);
+
+    deferred.resolve(res);
+  
+  });
+
+  return deferred;
+}
+
+let submit = async function (event, c, setState) {
+  let { props, state } = c;
+
+  let data = {
+    number: document.getElementById('card-number').value,
+    cvc: document.getElementById('card-cvc').value,
+    exp_month: document.getElementById('card-expiry-month').value,
+    exp_year: document.getElementById('card-expiry-year').value
+  };
+  
+  setState({ busy: true });
+
+  let res = await stripeToken(data);
+  if (!res)
+    return setState({ error: res.error.message });
+  
+  props.onToken(props.payment.id, res.id);
+  setState({ busy: false });
+
+}
+
+
+function render(c, setState) {
+  let { props, state } = c;
+
+  let { id, amount, name } = typeof props.payment !== 'undefined' ? props.payment : {};
+  
+  let buttonClass = { 
+    'stripe-busy': state.busy 
+  };
+
+  let style = {
+    visibility: props.payment ? 'visible' : 'hidden' 
+  };
+  
+  return (
+    <div style={style} class="backdrop">
+      <form class="stripe-form modal" method="POST" id="payment-form">
+        <span class="title">{name}</span>
+        <span class="info">{"$"+amount+" per Month"}</span>
+        <span class="stripe-errors">{state.error}</span>
+
+        <label>Card Number</label>
+        <input placeholder="credit card #" type="text" size="20" id="card-number" />
+
+        <label>CVC</label>
+        <input placeholder="" type="text" size="4" id="card-cvc"/>
+
+        <label>Expiration (MM/YYYY)</label>
+        <div>
+          <input placeholder="MM" class="expiry" type="text" size="2" id="card-expiry-month"/>
+          <span>/</span>
+          <input placeholder="YYYY" class="expiry" type="text" size="4" id="card-expiry-year"/>
+        </div>
+        <button class={buttonClass} onClick={submit}  type="button">Purchase</button>
+        <button class={buttonClass} style="color: grey" onClick={close} type="button">Cancel</button>
+      </form>
+    </div>
+    );
+}
+
+export default { name, propTypes, render, initialState };

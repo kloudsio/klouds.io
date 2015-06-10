@@ -1,91 +1,116 @@
 import { element } from 'segmentio/deku';
 
 
-function login(e, component, setState) {
-  e.preventDefault();
-  component.props.onLogin(component.data(), setState);
+function onRegister(ev, c, setState) {
+  let { props, email, password } = c;  
+
+  var user = props.sendRegister({
+    email: email.value,
+    password: password.value
+  });
+
+  props.setUser(user);
 }
 
-function register(e, component, setState) {
-  e.preventDefault();
-  component.props.onRegister(component.data(), setState);
+function onLogin(ev, c, setState) {
+  let { props, email, password } = c;
+
+  var user = props.sendLogin({
+    email: email.value,
+    password: password.value
+  });
+
+  props.setUser(user);
 }
 
-export default {
-  initialState() {
-    return {
-      authed: false,
-      text: '',
-      open: true,
-    }
+
+const name = 'Login';
+
+const propTypes = {
+  sendLogin: {
+    source: 'sendLogin'
   },
-
-  render(component, setState) {
-    let { props, state } = component;
-
-    function checkwin(e) {
-      if (e.target.value.toLowerCase() == "loud") {
-        document.body.style.transform = "rotate(9deg)";
-      } else {
-        document.body.style.transform = "";
-      }
-    }
-
-    function open() {
-      setState({ open: true });
-    }
-
-    function close() {
-      setState({ open: false });
-    }
-
-    if (state.authed) {
-      return (<div class="welcome">
-        Humbly Presenting...
-        K<input onKeyUp={checkwin} style="padding: none; border-top: none; border-left: none; border-right: none; width:4em" type='text' / >s.io!
-      </div>)
-    }
-
-    if (!state.open) {
-      return (<div class="welcome"><button onClick={open}>Login</button></div>);
-    }
-    return (
-
-      <form class="login step">
-        <div class="row middle-xs">
-          <div class="col-xs-2 center-xs">
-            <i class="num">1</i>
-          </div>
-          <div class="col-xs-10">
-            <h1>Create Your Login</h1>
-            <label>Email</label>
-          	<input name="email" type="email" placeholder="email" />
-      			<label>Password</label>
-            <input name="password" type="password" placeholder="password" />
-            <div>
-        			<button onClick={login}>Login</button>
-              <button onClick={register}>Register</button>
-              { state.authed ? "You are Logged In" : "" }
-              { state.text }
-            </div>
-          </div>
-        </div>
-      </form>
-    );
+  sendRegister: {
+    source: 'sendRegister'
   },
+  setUser: {
+    source: 'setUser'
+  }
+};
 
-  afterRender(component, el) {
-    let { props, state } = component;
-
-
-    component.data = function() {
-      let email = el.querySelector('input[type=email]');
-      let password = el.querySelector('input[type=password]');
-
-      return {
-        email: email.value,
-        password: password.value
-      };
-    }
+function initialState (props) {
+  return {    
+    virgin: true,
+    valid: true,
+    errors: {},
   }
 }
+
+
+function taint() {
+  setState({ virgin: false });
+  
+  if (state.valid) {
+    return;
+  }
+}
+
+function validate(ev, component, setState) {  
+  let { email, password, state, props } = component;
+  
+  if (state.virgin)
+    return;
+
+  let valid = true;
+  let errors = {};
+
+  if (!email.value.match(/\S+@\S+/)) {
+    valid = false;
+    errors.email = true;
+  }
+
+  if (password.value.length <= 5) {
+    valid = false;
+    errors.password = true;
+  }
+
+  setState({
+    errors: errors,
+    valid: valid,
+  })
+}
+
+
+function render(component, setState) {
+  let { props, state } = component;
+
+  return <div class="step row">
+    <div class="col-xs-2">
+      <span class="num">1</span>
+    </div>
+    <div class="col-xs middle-xs">
+      <h2>Klouds Account</h2>
+      <form class="item">
+        <div>
+          <label>Email { state.virgin ? "" : (state.errors.email ? "<\/3" : "<3") }</label>
+        	<input onInput={ validate } type="email" placeholder="Email" />
+  			</div>
+        <div>
+          <label>Password { state.virgin ? "" : (state.errors.password ? "<\/3" : "<3") }</label>
+          <input onInput={ validate } type="password" placeholder="Password" /> 
+        </div>
+        <div>
+          <button type="button" disabled={ !state.valid } onClick={ onRegister } class="secondary">Register</button>
+          <button type="button" disabled={ !state.valid } onClick={ onLogin }>Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+function afterRender(component, el) {
+  component.email = el.querySelector('input[type=email]');
+  component.password = el.querySelector('input[type=password]');
+}
+
+export default { name, propTypes, initialState, render, afterRender }

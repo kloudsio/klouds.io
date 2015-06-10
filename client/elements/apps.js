@@ -1,63 +1,94 @@
-	import { element } from 'segmentio/deku';
+import { element } from 'segmentio/deku';
+
 let _ = require('lodash/lodash');
 
 
-function itemClick(app) {
-	return function (e, component, setState) {
-		component.props.onOpen(app, component, setState);
+let Item = {
+	propTypes: {
+		user: {
+			source: 'user'
+		}
+	},
+
+	render(c) {
+		let { props } = c;
+
+		return <div class="item">
+			<h4>{props.name}</h4>
+			<p>{props.description}</p>
+			<button disabled={!props.user} onClick={props.onOpen}>{props.button}</button>
+		</div>
 	}
 }
+
 
 let propTypes = {
-	apps: {
-		source: 'apps'
+	user: {
+		source: 'user'
+	},
+	showPurchase: {
+		source: 'showPurchase'
+	},
+	fetchApps: {
+		source: 'fetchApps'
 	}
 }
 
-function render(component) {
-	let { props, state } = component;
+function initialState (props) {
+  return {    
+  	itemsOn: [],
+	itemsOff: []
+  }
+}
+ 
+let afterMount = async function (c, el) {
+	let { props } = c;
+	let items = await props.fetchApps();
 
-	let [appsOff, appsOn] = _.partition(props.apps, 'disabled');
+	let [appsOff, appsOn] = _.partition(items.apps, 'disabled');
 
-	let itemsOn = _.map(appsOn, function (app) {
-		return <div class='app-item'>
-			<h4>{app.name}</h4>
-			<p>{app.description}</p>
-			<button onClick={itemClick(app)}>Host ${app.amount} per month. </button>
-		</div>
-	});
+	let itemsOn = [];
+	let itemsOff = [];
 
-	let itemsOff = _.map(appsOff, function (app) {
-		return <div class={['upcoming-item']}>{app.name}</div>
-	});
+	for (let app of appsOn) {
+		itemsOn.push(<Item name={ app.name } description={ app.description } button="Launch" onOpen={ props.showPurchase } />);
+	}
 
-	return <div class="step">
-			<h4>Host me a...</h4>
-			<div class="row middle-xs">
-	          <div class="col-xs-2 center-xs">
-	            <i class="num">2</i>
-	          </div>
-	          <div class="col-xs-10">
-				  {itemsOn}
-				</div>
-			</div>
+	for (let app of appsOff) {
+		itemsOff.push( <app-off>{app.name}</app-off> );
+	}
 
-
-			<div class="row middle-xs">
-	          <div class="col-xs-2 center-xs">
-	            <i class="num">2</i>
-	          </div>
-	          <div class="col-xs-10">
-	          	{itemsOff}
-	          </div>
-			</div>
-		</div>
+	return { 
+    	itemsOn: itemsOn,
+    	itemsOff: itemsOff
+  	}
 }
 
-function afterRender(component, el) {
-	let { props, state } = component;
+function render(c) {
+
+	let { state, props } = c;
+
+	return <grid>
+		<div class="row">
+		  <div class="col-xs-2">
+		    <span class="num">2</span>
+		  </div>
+		  <div class="col-xs-10 middle-xs">
+			  <h2>Purchase Apps</h2>
+			  {state.itemsOn}
+			</div>
+		</div>
+
+
+		<div class="row middle-xs">
+		  <div class="col-xs-2 center-xs">
+		    <i class="num">3</i>
+		  </div>
+		  <div class="col-xs-10">
+		  	{state.itemsOff}
+		  </div>
+		</div>
+	</grid>
 }
 
-
-
-export default { propTypes, render, afterRender };
+export default { initialState, propTypes, afterMount, render };

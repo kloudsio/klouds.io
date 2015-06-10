@@ -1,55 +1,30 @@
 
-
-input {
-  color: var(--outlines);
-	border: 1px solid var(--outlines);
-  background: rgba(255, 255, 255, 0.03);
+label {
+  display: inline-block;
+  font-weight: normal;
+  margin: 0.5em 0 0 0;
+  font-size: 0.9rem;
 }
 
-input.secondary {
-  background: var(--button-secondary);
-  box-shadow: 1px 1px 1px 1px var(--button-secondary);
+input {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  display: block;
+  width: 100%;
+  line-height: 1em;
+}
+
+input.expiry {
+  display: inline-block;
+  width: 4em;
 }
 
 button {
-  font-variant: all-small-caps;
-  border: none;
-  box-shadow: 1px 1px 1px var(--primary-shadow);
-  color: var(--outlines);
-  background: var(--button-primary);
+  margin: 0.5em;
+  line-height: 1em;
+  padding: 0.5em 1em;
 }
 
-button.secondary {
-  background: var(--button-secondary);
-  box-shadow: 1px 1px 1px 1px var(--button-secondary);
-}
-
-.login input {
-  background: none;
-  border: 1px solid
-}
-
-.app-grid {
-
-}
-
-.app-item {
-  display: block;
-  width: 100%;
-  height: 7em;
-  margin-bottom: 1em;
-  padding: 1rem 6rem;
-  line-height: 2rem;
-}
-
-.upcoming-item {
-  display: inline-block;
-  padding: 1rem;
-  line-height: 1rem;
-  text-align: center;
-  margin: 0 auto 1rem;
-
-  border: none
-  background: var(--button-secondary);
-  opacity: 0.6;
-}
+.login button {
+  width: 7em;
+ }

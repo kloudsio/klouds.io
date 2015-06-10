@@ -1,16 +1,19 @@
 
 body {
   position: relative;
+  font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .logo {
   display: inline-block;
-  height: 48px;
-  margin-bottom: 1em;
+}
+
+.logo text {
+  transform: translate(0, 48px);
+  font-size: 48px;
 }
 
 .welcome {
-  margin-bottom: 1em;
   line-height: 34px;
 }
 

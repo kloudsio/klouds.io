@@ -1,49 +1,35 @@
 
-.step {
-  background: var(--step-background);
-  border: 1px solid var(--step-border);
+.login form {
+  width: 16em;
+  padding: 10px;
 }
 
-.step i.num {
+span.num {
+  display: inline-block;
+  line-height: 64px;
   font-size: 64px;
+  margin: 0.5em;
 }
 
-.step .title {
-  font-size: 1.1rem;
+
+grid {
+
 }
 
-.step::after ::hover{
-  text-shadow: white;
-}
-
-.step .info {
-  font-size: 0.9rem;
-  display: block;
-}
-
-.step label {
+.item {
+  margin: 10px;
   display: inline-block;
-  font-weight: normal;
-  margin: 0.5em 0 0 0;
-  font-size: 0.9rem;
+  padding: 10px;
 }
 
-.step input {
-  padding: 0.5em 1em;
-  margin: 0.5em 0 0.5em 0;
-  display: block;
-  width: 15em;
-  line-height: 1em;
-}
-
-.step input.expiry {
+app-off {
   display: inline-block;
-  width: 4em;
-}
+  padding: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  margin: 0 auto 1rem;
 
- .step button {
-  margin: 0.5em 0 0.5em 0;
-  line-height: 1em;
-  width: 7.5em;
-  padding: 0.5em 1em;
- }
+  border: none;
+  background: var(--button-secondary);
+  opacity: 0.6;
+}

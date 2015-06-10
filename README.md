@@ -23,7 +23,13 @@ make develop
 
 ```
 
-Sub-Documents
+## Documentation
 [Client](docs/client.md)
 [Server](docs/server.md)
 [History](docs/history.md)
+
+## Contact
+
+For bugs, questions, comments, corrections, suggestions, etc., open an issue in kloudsio/klouds.io
+
+Or just [click here](https://github.com/kloudsio/klouds.io/issues/new?title=%5BKlouds.io ... %5D%20) to create a new issue.

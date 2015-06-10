@@ -1,87 +1,78 @@
-#
-# Environment.
-#
-
-export PORT=8080
-export MONGODB=localhost/test
-export ASSETS=/code/klouds.io/build
-export JWT_KEY=klouds-on-fire
-export STRIPE_SK=sk_test_Z34c2IRtyypD4EIQjdowKeLd
-export STRIPE_PK=pk_test_yUmttmGoJunk3wEloYLdrO2V
 
 NODE := iojs
 NODE_ENV ?= development
-DUO := duo -u ../client/plugins.js -o build
+DUO := duo \
+	--output build \
+	--external-source-maps \
+	--development
 
 
-#
-# ENV VARS
-#
-
+DIR := [ -d build ] || mkdir build
+CSS := $(DUO) --use client/node_modules/duo-myth client/styles/app.css --stdout > build/app.css
+JS := $(DUO) --use client/node_modules/duo-babel client/lib/app.js --stdout > build/app.js
+HTML := cp -u client/index.html build/index.html
+SERVE := iojs server/index.js
 
 
 #
 # Commands
 #
-
-all: install build nodemon
-
-
-develop:
-	@cd server && iojs develop.js
-
-
-install: server/node_modules client/node_modules build/browser-polyfill.min.js
-
-build: build/index.html bundle
-
-clean: clean-build clean-duo
-
+.PHONY: all
+all: install build
+	
 
 #
 # install
 #
 
+.PHONY: install
+install: server/node_modules client/node_modules build/browser-polyfill.min.js
+
 %/node_modules: %/package.json
 	@cd $* && npm install
 
 build/browser-polyfill.min.js: client/node_modules/duo-babel/node_modules/babel-core/browser-polyfill.min.js
-	@ [ -d build ] || mkdir build
 	@cp $< $@
 
 
-#
-# Duo Bundle
-#
-
-bundle:
-	@$(DUO) client/styles/app.css client/lib/app.js
-
-watch:
-	@sane \
-		' cp -u client/index.html build/index.html; \
-		  $(DUO) client/styles/app.css --stdout > build/app.css; \
-		  $(DUO) client/lib/app.js --stdout  > build/app.js;' \
-		  client --glob='**/*'
-
 
 #
-# Static
+# client build & server run
 #
+.PHONY: build js css html
+build: css js assets
 
-build/index.html: client/index.html
-	@cp $< $@
+css:
+	$(CSS)
 
+js:
+	@$(JS)
 
-#
-# Dev Server
-#
+assets:
+	$(HTML)
 
 serve:
-	@iojs server/index.js
+	$(SERVE)
 
-nodemon:
-	@sane 'iojs server/index.js' server --glob='**/*'
+
+
+#
+# watch: client build & server run
+#
+.PHONY: watch-css watch-js watch-server
+
+watch-css:
+	@ sane "make css" ./client --glob='**/*.css'
+
+watch-js:
+	@ sane "make js" ./client --glob='**/*.js'
+
+
+watch-assets:
+	@ sane "make assets" ./client --glob='[^node_modules]**/*.[^js|css|json]'
+	
+watch-server:
+	@ sane "make serve" ./server --glob='**/*'
 
 
 
@@ -89,9 +80,11 @@ nodemon:
 # Cleaning Up
 #
 
+clean: clean-build clean-duo
+.PHONY: clean clean-build clean-npm clean-duo
+
 clean-build:
 	@rm -rf build
-	@mkdir build
 
 clean-npm:
 	@ rm -rf client/node_modules
@@ -100,7 +93,3 @@ clean-npm:
 
 clean-duo:
 	@rm -rf ./components
-
-.PHONY: all install bundle
-.PHONY: watch nodemon develop seed
-.PHONY: clean clean-build clean-npm clean-duo

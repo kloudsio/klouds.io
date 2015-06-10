@@ -2,13 +2,10 @@ var _ = require('lodash');
 var route = require('koa-route');
 var jsonBody = require('koa-json-body');
 var json = require('koa-json');
-var koajwt = require('koa-jwt');
-
 
 var main = require('../lib/main.js');
-var config = require('../config.js');
 var stripe = require('stripe')(process.env.STRIPE_SK);
-var auth = koajwt({ secret: process.env.JWT_KEY });
+var auth = require('koa-jwt')({ secret: process.env.JWT_KEY });
 
 /*
   DB

@@ -1,34 +1,7 @@
 @import 'kristoferjoseph/flexboxgrid:dist/flexboxgrid.css';
 @import 'necolas/normalize.css';
 
-
-
-:root {
-	--gutters: 10px;
-	--outlines: #1C0A1F;
-	--background: linear-gradient(#EAEEEF, #EAEEEF);
-	--step-backdrop: rgba(0, 0, 0, 0.3);
-	--step-background: linear-gradient(#EAEEEF, #EAEEEF);
-	--step-border: #677981;
-	--primary-shadow: black;
-	--button-primary: transparent;
-	--button-secondary: #232629;
-	--button-secondary-color: #CCC;
-}
-
-
-::placeholder {
-  opacity: .4;
-  transition: opacity 1s;
-
-}
-
-:focus::placeholder {
-  opacity: .2;
-}
-
-
-@import './paint.css';
+@import './global.css';
 @import './layout.css';
 @import './controls.css';
 @import './step.css';

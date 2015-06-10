@@ -1,7 +1,6 @@
 var jwt = require('koa-jwt');
 var pswd = require('pswd')();
 var Joi = require('joi');
-var config = require('../config.js');
 
 
 module.exports.login = {
@@ -23,7 +22,7 @@ module.exports.login = {
     if (user) {
       var match = yield pswd.compare(params.password, user.password);
       if (match) {
-        var token = jwt.sign(user, config('jwt_key'), {
+        var token = jwt.sign(user, process.env.JWT_KEY, {
           expiresInMinutes: 60 * 5
         });
 				delete user.password;
@@ -45,7 +44,7 @@ module.exports.login = {
 
 module.exports.create = {
   method: 'post',
-  path: '/create',
+  path: '/',
   validate: {
     body: {
       email: Joi.string().lowercase().email(),
@@ -60,7 +59,7 @@ module.exports.create = {
       email: params.email
     });
     if (exists) {
-      this.status = 401;
+      this.status = 403;
       this.body = {
         error: 'That user already exists'
       }

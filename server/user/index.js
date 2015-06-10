@@ -1,6 +1,5 @@
 
 var main = require('../lib/main.js');
-var config = require('../config.js');
 
 /*
   DB
@@ -9,7 +8,7 @@ var monk = require('monk');
 var wrap = require('co-monk');
 
 function* userStore(next) {
-  this.db = monk(config('mongodb'));
+  this.db = monk(process.env.MONGODB);
   this.users = wrap(this.db.get('users'));
   yield next;
 }

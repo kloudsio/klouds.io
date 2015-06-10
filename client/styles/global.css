@@ -1,0 +1,90 @@
+
+:root {  
+
+  /*  color scheme*/
+  --astral-light: #57B4D6;
+  --astral-dark: #396E8B;
+  
+  --black: #000000;
+  --purple: #664E99;
+  --venice-blue: #10486A;
+  --light: #DCDCDC;
+  
+  
+  --background: transparent;
+  --box-shadow: none;
+  --border: transparent;
+  --color: var(--light);
+  
+  --button-background: var(--light);
+  
+  
+  --gutters: 10px;
+  
+  --step-background: #FFF;
+  --step-border: #CCCCDD;
+    
+  --button-primary-color: #E9E9E9; 
+  --button-secondary: hsl(0, 0%, 86%);
+  --app-item: #EEE;
+}
+.row {
+  color: var(--light);
+  background: var(--purple)
+  box-shadow: 0 2px 8px 3px rgba(0,0,0,0.3);
+}
+
+body {
+  background: radial-gradient(var(--astral-light), var(--astral-dark));
+}
+
+input {
+  border: var(--border);
+  background: var(--background);
+}
+
+button {
+  background: var(--light);  
+  border: transparent;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+  color: var(--purple);
+}
+
+button:disabled {
+  box-shadow: none;
+  opacity: 0.8;
+  pointer: none;
+}
+
+.login input {
+  color: var(--light);
+  background: none;
+}
+
+::placeholder {
+  opacity: .4;
+  transition: opacity 1s;
+}
+
+:focus::placeholder {
+  opacity: .2;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--purple) inset;
+  -webkit-text-shadow: 0 0 0 1000px var(--light) inset;
+}
+
+.logo text {
+  stroke: var(--color);
+  fill: none;
+
+  font-weight: bold;
+  paint-order:fill;
+  text-rendering: optimizeLegibility;
+  stroke-linejoin: miter;
+  stroke-width: 1.5;
+
+  stroke-dashoffset: 0;
+  stroke-dasharray: 0 1200 0;
+}

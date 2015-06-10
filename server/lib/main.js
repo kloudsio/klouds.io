@@ -7,7 +7,6 @@ var serve = require('koa-static');
 var mount = require('koa-mount');
 
 var util = require('./util');
-var config = require('../config.js');
 
 /*
 	Main App

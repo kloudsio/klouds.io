@@ -2,7 +2,6 @@ var _ = require('lodash');
 
 
 var main = require('../lib/main.js');
-var config = require('../config.js');
 var route = require('koa-route');
 
 
@@ -35,4 +34,4 @@ app.use(appStore);
 
 app.use(route.get('/', getApps));
 
-main.mount('/apps', app);
+main.mount('/app', app);

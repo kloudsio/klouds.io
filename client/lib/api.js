@@ -1,50 +1,62 @@
-let superagent = require('visionmedia/superagent')
-let _ = require('lodash/lodash')
+require('github/fetch@master:/fetch.js');
 
 
-/*
-  These are Thunks.
+const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+};
 
-  function fooThunk( ... ) { 
-    ...
-    
-    return function (cb) { ... }  
-  }
-*/
-let authed = function() {};
 
-export let auth = function (token) {
-  console.log('Setting Auth Header', token);
-  authed = function(request) { 
-    request.set('Authorization', `Bearer ${token}`); 
-    return request;
-  }
+function validate(response) {
+    if (response.status != 200)
+        throw new Error(response.statusText);
+
+    return response.json();
 }
 
-export let user = {
-  
-  login(data) {
-    return function(cb) {
-    	superagent.post('/user/login').type('json').accept('json').send(data).end(cb);
-    }
-  },
 
-  register(data) {
-    return function(cb) {
-      return superagent.post('/user/create').type('json').accept('json').send(data).end(cb);
-    }
-  }
+function authorize(response) {
+    headers.Authorization = `Bearer ${ response.token }`;
+    return response;
 }
 
-export let apps = {
-	get() {		
-    return function(cb) {
-	    return superagent.get('/apps').type('json').accept('json').end(cb);
+
+function postable(x) { 
+    return { 
+        body: JSON.stringify(x), 
+        method: 'post', 
+        headers,
     }
-	},
-  purchase(data) {
-    return function(cb) {
-      return authed(superagent.post('/payment')).type('json').accept('json').send(data).end(cb);
-    }    
-  }
 }
+
+
+let fetchApps = async function () {
+    return await fetch('/app').then(validate);
+}
+
+let sendLogin = async function (data) {
+    const response = await fetch('/user/login', postable(data)).then(validate).then(authorize);
+
+    if (!response) {
+        console.log('response', response);
+        return;
+    }
+
+    return response;
+}
+
+let sendRegister = async function (data) {
+    const response =  await fetch('/user', postable(data)).then(validate);
+    return await login(data);
+
+}
+
+let sendPurchase = async function (app_id, token) {
+    const data = {
+        app_id: app_id,
+        tok: token
+    };
+    return await fetch.post('/payment', postable(data)).then(validate);
+}
+
+export default { fetchApps, sendLogin, sendRegister, sendPurchase }
