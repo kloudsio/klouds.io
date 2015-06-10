@@ -5,6 +5,7 @@
 }
 
 span.num {
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
   display: inline-block;
   line-height: 64px;
   font-size: 64px;
@@ -20,6 +21,8 @@ grid {
   margin: 10px;
   display: inline-block;
   padding: 10px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+  background: #664E99;
 }
 
 app-off {

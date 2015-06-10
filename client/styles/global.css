@@ -28,10 +28,14 @@
   --button-secondary: hsl(0, 0%, 86%);
   --app-item: #EEE;
 }
+
 .row {
   color: var(--light);
   background: var(--purple)
   box-shadow: 0 2px 8px 3px rgba(0,0,0,0.3);
+}
+.row h2 {
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 body {
@@ -86,5 +90,6 @@ input:-webkit-autofill {
   stroke-width: 1.5;
 
   stroke-dashoffset: 0;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
   stroke-dasharray: 0 1200 0;
 }
