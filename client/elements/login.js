@@ -84,28 +84,30 @@ function validate(ev, component, setState) {
 function render(component, setState) {
   let { props, state } = component;
 
-  return <div class="step row">
-    <div class="col-xs-2">
-      <span class="num">1</span>
+  return <div class="row middle-xs">
+      <div class="col-xs-2">
+        <span class="num">1</span>
+      </div>
+      <div class="col-xs-10 middle-xs">
+        <h2>Klouds Account</h2>
+      </div>
+      <div class="row middle-xs">
+        <form class="offset-xs-2 login item">
+          <div>
+            <label>Email { state.virgin ? "" : (state.errors.email ? "<\/3" : "<3") }</label>
+          	<input onInput={ validate } type="email" placeholder="Email" />
+    			</div>
+          <div>
+            <label>Password { state.virgin ? "" : (state.errors.password ? "<\/3" : "<3") }</label>
+            <input onInput={ validate } type="password" placeholder="Password" /> 
+          </div>
+          <div>
+            <button type="button" disabled={ !state.valid } onClick={ onRegister } class="secondary">Register</button>
+            <button type="button" disabled={ !state.valid } onClick={ onLogin }>Login</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="col-xs middle-xs">
-      <h2>Klouds Account</h2>
-      <form class="item">
-        <div>
-          <label>Email { state.virgin ? "" : (state.errors.email ? "<\/3" : "<3") }</label>
-        	<input onInput={ validate } type="email" placeholder="Email" />
-  			</div>
-        <div>
-          <label>Password { state.virgin ? "" : (state.errors.password ? "<\/3" : "<3") }</label>
-          <input onInput={ validate } type="password" placeholder="Password" /> 
-        </div>
-        <div>
-          <button type="button" disabled={ !state.valid } onClick={ onRegister } class="secondary">Register</button>
-          <button type="button" disabled={ !state.valid } onClick={ onLogin }>Login</button>
-        </div>
-      </form>
-    </div>
-  </div>
 }
 
 function afterRender(component, el) {

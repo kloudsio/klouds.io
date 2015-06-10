@@ -7,9 +7,13 @@ var tweenable = new Tweenable();
 function render(component) {
   let { props, state } = component;
 
-  return <svg class="logo">
-      <text>{props.children}</text>
-    </svg>
+  return <div class="row center-xs">
+      <div class="col-xs-12 middle-xs">
+        <svg class="logo">
+          <text>{props.children}</text>
+        </svg>
+      </div>
+    </div>
 }
 
 

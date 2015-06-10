@@ -69,24 +69,29 @@ function render(c) {
 	let { state, props } = c;
 
 	return <grid>
-		<div class="row">
-		  <div class="col-xs-2">
-		    <span class="num">2</span>
-		  </div>
-		  <div class="col-xs-10 middle-xs">
-			  <h2>Purchase Apps</h2>
-			  {state.itemsOn}
+		<div class="row middle-xs">
+			<div class="col-xs-2">
+				<span class="num">2</span>
+			</div>
+			<div class="col-xs-10 middle-xs">
+				<h2>Purchase Apps</h2>
+			</div>
+			<div class="row middle-xs">
+				{state.itemsOn}
 			</div>
 		</div>
 
 
 		<div class="row middle-xs">
-		  <div class="col-xs-2 center-xs">
-		    <i class="num">3</i>
-		  </div>
-		  <div class="col-xs-10">
-		  	{state.itemsOff}
-		  </div>
+			<div class="col-xs-2">
+				<span class="num">3</span>
+			</div>
+			<div class="col-xs-10 middle-xs">
+				<h2>Known Apps</h2>
+			</div>
+			<div class="row middle-xs">
+		  		{state.itemsOff}
+		 	</div>
 		</div>
 	</grid>
 }

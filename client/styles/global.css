@@ -29,6 +29,10 @@
   --app-item: #EEE;
 }
 
+body {
+  background: radial-gradient(var(--astral-light), var(--astral-dark));
+}
+
 .row {
   color: var(--light);
   background: var(--purple)
@@ -38,13 +42,14 @@
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
-body {
-  background: radial-gradient(var(--astral-light), var(--astral-dark));
-}
-
 input {
   border: var(--border);
   background: var(--background);
+}
+
+.login input {
+  color: var(--light);
+  background: none;
 }
 
 button {
@@ -60,10 +65,6 @@ button:disabled {
   pointer: none;
 }
 
-.login input {
-  color: var(--light);
-  background: none;
-}
 
 ::placeholder {
   opacity: .4;

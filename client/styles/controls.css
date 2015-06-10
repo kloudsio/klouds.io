@@ -1,5 +1,6 @@
 
 label {
+  box-sizing: border-box;
   display: inline-block;
   font-weight: normal;
   margin: 0.5em 0 0 0;
@@ -7,7 +8,9 @@ label {
 }
 
 input {
-  margin: 0.5em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
   padding: 0.5em 1em;
   display: block;
   width: 100%;
@@ -15,16 +18,19 @@ input {
 }
 
 input.expiry {
+  box-sizing: border-box;
   display: inline-block;
   width: 4em;
 }
 
 button {
-  margin: 0.5em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
   line-height: 1em;
   padding: 0.5em 1em;
 }
 
 .login button {
-  width: 7em;
- }
+  width: 8em;
+}
